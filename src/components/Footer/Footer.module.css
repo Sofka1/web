@@ -1,0 +1,198 @@
+.footer{
+    margin: auto;
+    max-width: 100%;
+    padding: 40px 0 20px 0;
+    background-color: #545778;
+}
+
+.footerHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 40px;
+}
+
+.footerLine{
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+.footerLogo{
+    width: 150px;
+    margin: 0 40px;
+}
+
+
+
+.footerContent{
+    max-width: 1200px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.formFooter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+}
+
+.formFooterInfo{
+    max-width: 300px;
+}
+
+.formFooterInfo h4{
+    font-weight: 400;
+    font-size: 16px;
+    color: #fff;
+
+    margin-bottom: 5px;
+}
+
+.formFooterInfo p{
+    font-weight: 400;
+    font-size: 9px;
+    color: #b1b1b1;
+}
+
+.formLink{
+    cursor: pointer;
+    text-decoration: none;
+
+    font-weight: 400;
+    font-size: 9px;
+    color: #f0055c;
+}
+
+
+
+
+.containerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 30px;
+  }
+  
+  .input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #fff;
+    border-radius: 40px;
+    width: 232px;
+    background-color: #545778;
+    color: #fff;
+  }
+
+  /* Стили для placeholder */
+.input::placeholder {
+    color: #fff; /* Измените цвет на желаемый */
+  }
+  
+  
+  .button {
+    border-radius: 40px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #fff;
+    cursor: pointer;
+    border: none;
+
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 125%;
+    color: #545778;
+  }
+  
+  .button:hover {
+    background-color: #f0055c;
+    color: #fff;
+  }
+  
+  .message {
+    margin-top: 10px;
+    color: green;
+  }
+  
+
+
+
+
+
+
+
+
+.footerLinks{
+    margin-top: 55px;
+}
+
+.contentLinks{
+    padding: 25px 0 0px 0;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contentLinks p{
+    font-weight: 400;
+    font-size: 10px;
+    color: #fff;
+}
+
+.dockLink{
+    font-weight: 400;
+    font-size: 10px;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    color: #fff;
+
+    margin-left: 70px;
+}
+
+.formStyle{
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* менюшка сбоку */
+.menuFooter{
+    width: 450px;
+}
+
+.menuFooter ul{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: right;
+}
+
+.menuFooter li{
+    list-style-type: none;
+
+    border: 1px solid #fff;
+    border-radius: 50px;
+    padding: 8px 15px;
+
+    margin: 0 10px 10px 0;
+}
+
+.menuFooter li a{
+    cursor: pointer;
+
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    text-align: right;
+    color: #fff;
+}

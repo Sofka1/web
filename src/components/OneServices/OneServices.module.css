@@ -1,0 +1,215 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    padding: 0;
+}
+
+.headerService {
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navigationService {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navigationService a {
+    font-weight: 400;
+    font-size: 14px;
+    color: #545778;
+
+    text-decoration: none;
+}
+
+.navigationService a:hover {
+    color: #FA8270;
+}
+
+.navigationService p {
+    font-weight: 400;
+    font-size: 14px;
+    color: #545778;
+}
+
+.headerService button {
+    border-radius: 40px;
+    padding: 8px 20px;
+    background-color: #545778;
+    border: none;
+
+    font-weight: 500;
+    font-size: 15px;
+    font-variant: small-caps;
+    color: #fff;
+
+    cursor: pointer;
+}
+
+.headerService button:hover {
+    background-color: #444663;
+}
+
+
+/* Основной контент с картинкой и описанием */
+.mainContent {
+    margin: 30px 0 40px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    gap: 45px;
+}
+
+.serviceImage {
+    border-radius: 50px;
+    width: 40%;
+}
+
+.mainContent img {
+    width: 100%;
+}
+
+.infoAbout h2 {
+    font-weight: 500;
+    font-size: 40px;
+    color: #FA8270;
+    margin: 0 0 40px 0;
+}
+
+.infoAbout h5 {
+    font-weight: 500;
+    font-size: 20px;
+    color: #545778;
+
+    margin-bottom: 20px;
+}
+
+.infoAbout p {
+    font-weight: 400;
+    font-size: 16px;
+    color: #545778;
+}
+
+/* карточки  временем, форматом и стоимостью */
+.dopContent {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cardDopContent {
+    width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 15px;
+
+    border-radius: 20px;
+    box-shadow: 0 4px 10px 0 rgba(250, 130, 112, 0.25);
+    background: #fff;
+}
+
+.iconBlock {
+    border-radius: 20px 0 0 20px;
+    padding: 26px;
+    background-color: #FA8270;
+}
+
+.iconBlock img {
+    max-width: 50px;
+}
+
+.cardInfo {
+    margin: 0 15px 0 0;
+}
+
+.cardInfo h6 {
+    font-weight: 600;
+    font-size: 16px;
+    color: #FA8270;
+
+    margin-bottom: 5px;
+}
+
+.cardInfo p {
+    font-weight: 400;
+    font-size: 16px;
+    color: #545778;
+}
+
+
+/* отзывы */
+.reviewsBlock {
+    margin: 100px auto 0 auto;
+}
+
+.reviewsTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.reviewsTitle .decorTitle {
+    width: 100%;
+    height: 2px;
+    background-color: #545778;
+}
+
+.reviewsTitle h3 {
+    margin: 0 73px;
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    color: #545778;
+}
+
+/* карточка отзыва */
+.reviewContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.reviewCard {
+    width: 500px;
+    border-radius: 20px;
+    padding: 15px 25px;
+    background-color: aliceblue;
+}
+
+.mainUserInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.infoUserForRev {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+    border-radius: 50px;
+    padding: 8px 15px;
+    background: #fff;
+}
+
+.avatarUser img {
+    border-radius: 100%;
+    max-width: 36px;
+}
+
+.reviewCard p{
+    font-weight: 400;
+    font-size: 14px;
+    color: #545778;
+}

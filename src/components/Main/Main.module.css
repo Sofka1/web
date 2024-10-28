@@ -1,0 +1,871 @@
+@import url('../../../src/fonts/font/stylesheet.css');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.conteiner {
+    margin: 60px auto 0;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.voln {
+    width: 2000px;
+    /* margin: auto; */
+}
+
+.voln img {
+    margin: auto;
+    /* max-width: 1440px; */
+    width: 100%;
+    position: absolute;
+    top: 550px;
+}
+
+.voln2 {
+    z-index: -10;
+    margin: auto;
+}
+
+.voln2 img {
+    z-index: -10;
+    /* max-width: 1440px; */
+    width: 100%;
+    position: absolute;
+    top: 1650px;
+}
+
+.voln3 {
+    z-index: 0;
+    margin: auto;
+}
+
+.voln3 img {
+    z-index: -10;
+    /* max-width: 1440px; */
+    width: 100%;
+    position: absolute;
+    top: 3000px;
+}
+
+.voln4 {
+    z-index: 0;
+    margin: auto;
+}
+
+.voln4 img {
+    z-index: -10;
+    /* max-width: 1440px; */
+    width: 100%;
+    position: absolute;
+    top: 4010px;
+}
+
+.information {
+    max-width: 702px;
+}
+
+.decoration img {
+    max-width: 437px;
+}
+
+.title {
+    margin-bottom: 30px;
+}
+
+.title h1 {
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 51px;
+    text-transform: uppercase;
+    background: linear-gradient(144deg, #f0055c 0%, #ffc47a 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.title h2 {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 140%;
+    color: #f86a6c;
+}
+
+.information .enroll {
+    border: 1.5px solid #545778;
+    border-radius: 40px;
+    padding: 8px 30px 10px 30px;
+    width: 167px;
+    height: auto;
+    background-color: #fff;
+
+    font-weight: 500;
+    font-size: 20px;
+    font-variant: small-caps;
+    color: #545778;
+
+    transition: color 0.5s;
+
+    cursor: pointer;
+}
+
+.enroll:hover {
+    border: 1.5px solid #f0055c;
+    background-color: #f86a6c;
+    color: #fff;
+    font-weight: 600;
+}
+
+
+
+
+
+
+
+
+/* aboutMe */
+.aboutMe {
+    margin: auto;
+    margin-top: 150px;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 200;
+}
+
+.aboutMe img {
+    z-index: 10;
+    max-width: 400px;
+    margin: 0 100px 0 0;
+}
+
+.titleAboutMe {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+
+    margin-bottom: 35px;
+}
+
+.titleAboutMe h2 {
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 32px;
+    color: #f86a6c;
+
+    margin-right: 10px;
+}
+
+.decorAboutMe {
+    width: 100px;
+    height: 2px;
+    border-radius: 5px;
+    background-color: #f86a6c;
+    stroke-width: 1px;
+    stroke: #f86a6c;
+}
+
+.aboutMeInformation p {
+    font-weight: 400;
+    font-size: 18px;
+    font-variant: small-caps;
+    color: #545778;
+    margin-bottom: 10px;
+}
+
+.aboutMeInformation span {
+    color: #f86a6c;
+    font-weight: 500;
+}
+
+
+/* ////// */
+.inquiries {
+    z-index: 200;
+    margin: 150px auto;
+    max-width: 1200px;
+}
+
+.inquiriesTitle {
+    z-index: 200;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.inquiriesTitle h3 {
+    z-index: 200;
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 32px;
+    font-variant: uppercase;
+    text-align: center;
+    color: #f86a6c;
+}
+
+.serviceCards {
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.card1 {
+    z-index: 200;
+    width: 384px;
+    height: 200px;
+    padding: 35px 25px;
+    box-shadow: 0 4px 10px 0 rgba(250, 130, 112, 0.25);
+    background: linear-gradient(45deg, #feecf1 0%, #fff7f3 100%);
+    border-radius: 10px;
+}
+
+.card2 {
+    z-index: 200;
+    margin: 0 24px;
+    width: 384px;
+    height: 200px;
+    padding: 35px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px 0 rgba(250, 130, 112, 0.25);
+    background: linear-gradient(90deg, #fbfefe 0%, #fcfefe 100%);
+}
+
+.card3 {
+    z-index: 200;
+    width: 384px;
+    height: 200px;
+    padding: 35px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px 0 rgba(250, 130, 112, 0.25);
+    background: linear-gradient(135deg, #fffef4 0%, #fff2f0 100%);
+}
+
+.cardTitle {
+    margin-bottom: 25px;
+}
+
+.cardTitle p {
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    color: #545778;
+}
+
+.cardInfo {
+    margin-bottom: 25px;
+}
+
+.infoTitle {
+    font-weight: 400;
+    font-size: 16px;
+    color: #545778;
+}
+
+.infoValue {
+    font-weight: 500;
+    font-size: 16px;
+    text-align: right;
+    color: #545778;
+}
+
+.duration,
+.format,
+.cost {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.tochki {
+    z-index: 200;
+    flex: 1 0;
+    border-bottom: 2px dotted #545778;
+    height: 1em;
+    margin: 0 .5em;
+}
+
+.cardOption {
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.linkCard {
+    z-index: 200;
+    font-weight: 400;
+    font-size: 16px;
+    font-variant: small-caps;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    color: #545778;
+
+    transition: 0.3s;
+}
+
+.linkCard:hover {
+    z-index: 200;
+    color: #f0055c;
+}
+
+.enroll {
+    z-index: 200;
+    border: 1px solid #545778;
+    border-radius: 40px;
+    padding: 3px 25px 5px 25px;
+    width: 151px;
+    height: 27px;
+    background-color: #feecf100;
+}
+
+.goCatalog {
+    z-index: 200;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.goCatalog button {
+    z-index: 200;
+    margin: auto;
+    border: 1px solid #545778;
+    border-radius: 30px;
+    padding: 10px 30px;
+    width: 189px;
+    height: 44px;
+
+    font-weight: 500;
+    font-size: 20px;
+    font-variant: small-caps;
+    text-align: center;
+    color: #545778;
+
+    background-color: #f0055b00;
+    cursor: pointer;
+}
+
+.goCatalog button:hover {
+    z-index: 200;
+    border: 1.5px solid #f0055c;
+    background-color: #f86a6c;
+    color: #fff;
+    font-weight: 600;
+}
+
+.buttonGoCatalog {
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonGoCatalog p {
+    z-index: 200;
+    margin-bottom: 3px;
+}
+
+.blueArrow {
+    z-index: 200;
+    width: 24px;
+    height: 24px;
+    margin: 0 0 0 10px;
+}
+
+.whiteArrow {
+    z-index: 200;
+    display: none;
+    width: 24px;
+    height: 24px;
+    margin: 0 0 0 10px;
+}
+
+.goCatalog button:hover .blueArrow {
+    z-index: 200;
+    display: none;
+}
+
+.goCatalog button:hover .whiteArrow {
+    z-index: 200;
+    display: block;
+}
+
+
+
+/* myBenefits */
+.myBenefits {
+    z-index: 200;
+    margin: 150px auto;
+    max-width: 1200px;
+}
+
+.myBenefitsTitle {
+    z-index: 200;
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 32px;
+    font-variant: uppercase;
+    text-align: center;
+    color: #f86a6c;
+
+    margin-bottom: 35px;
+}
+
+.myBenefitsContents {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.myBenefitsInfo {
+    font-weight: 400;
+    font-size: 18px;
+    font-variant: small-caps;
+    text-align: justify;
+    color: #545778;
+}
+
+.myBenefitsInfo p {
+    margin-bottom: 10px;
+}
+
+.myBenefitsInfo span {
+    color: #f86a6c;
+}
+
+.myBenefitsContents img {
+    width: 374px;
+    margin-left: 110px;
+}
+
+
+
+
+/* Отзывы */
+
+.testimonials {
+    z-index: 200;
+    margin: 0 auto 120px auto;
+    max-width: 1200px;
+}
+
+.testimonials h3 {
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 32px;
+    font-variant: uppercase;
+    text-align: center;
+    color: #f86a6c;
+
+    margin-bottom: 35px;
+}
+
+.reviewContainer {
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.reviewCard {
+    z-index: 200;
+    flex: 1;
+    border-radius: 5px;
+    padding: 30px 40px;
+    margin: 0 14px;
+    box-shadow: 0 4px 4px 0 rgba(250, 130, 112, 0.2);
+    background-size: cover;
+}
+
+.reviewCard div {
+    color: #f86a6c;
+}
+
+.commentUserForRevi {
+    margin: 20px 0;
+    font-weight: 400;
+    font-size: 15px;
+    color: #545778;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    /* Показывает только 10 строк */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.reviewCard .commentUserForRevi.expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+    /* Убирает ограничение по строкам */
+    max-height: none;
+    /* Убирает ограничение по высоте */
+}
+
+.infoUserForRev {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.avatarUser img {
+    border-radius: 30px;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.nameUserForRevi {
+    font-weight: 400;
+    font-size: 16px;
+    font-variant: small-caps;
+    color: #545778;
+}
+
+.expanButton {
+    background-color: #f86a6c00;
+    color: #545778;
+    border: 1px solid #545778;
+    border-radius: 40px;
+    padding: 5px 25px;
+    cursor: pointer;
+    margin: 0px 0 15px 0;
+
+    font-weight: 500;
+    font-size: 15px;
+    font-variant: small-caps;
+
+    transition: color 0.5s;
+}
+
+.expanButton:hover {
+    background-color: #e05558;
+    color: #fff;
+    border: 1px solid #e05558;
+}
+
+
+/* faqBlock */
+.faqBlock {
+    position: relative;
+    z-index: 200;
+    margin: 0 auto 120px auto;
+    max-width: 1200px;
+}
+
+.faqBlock h3 {
+    z-index: 200;
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 32px;
+    font-variant: uppercase;
+    text-align: center;
+    color: #f86a6c;
+
+    margin-bottom: 35px;
+}
+
+.containerFAQ {
+    z-index: 200;
+    margin: auto;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    border-radius: 30px;
+
+}
+
+.faqItem {
+    z-index: 200;
+    margin: auto;
+    max-width: 800px;
+    border: none;
+    padding: 40px 80px;
+    /* box-shadow: 0 4px 10px 0 rgba(250, 130, 112, 0.25); */
+    background: linear-gradient(135deg, #fffef4 0%, #fff2f0 100%);
+}
+
+.faqQuestion {
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.faqQuestion p {
+    z-index: 200;
+    margin: 0;
+    font-weight: 500;
+    font-size: 20px;
+    font-variant: small-caps;
+    color: #545778;
+}
+
+.expandButton {
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+    padding: 12px 10px 6px 10px;
+    border-radius: 50px;
+}
+
+.faqAnswer {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+
+    font-weight: 400;
+    font-size: 16px;
+    color: #545778;
+}
+
+.rotated {
+    transform: rotate(180deg);
+    transition: transform 0.5s ease;
+}
+
+
+.answerLink {
+    text-decoration: none;
+    color: #f86a6c;
+}
+
+
+/* Для самопознания */
+
+.selfDiscovery {
+    max-width: 1200px;
+    position: relative;
+    z-index: 200;
+    margin: 0 auto 120px auto;
+}
+
+.selfDiscovery h3 {
+    z-index: 200;
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 32px;
+    font-variant: uppercase;
+    text-align: center;
+    color: #f86a6c;
+
+    margin-bottom: 35px;
+}
+
+.sliderContainer .slides {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.sliderContainer .slide {
+    flex: 0 0 33%;
+    max-width: 33%;
+    box-sizing: border-box;
+    padding: 0 10px;
+}
+
+.sliderContainer .testCard {
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 4px 0 rgba(250, 130, 112, 0.2);
+    margin: 0 auto 20px auto;
+}
+
+.sliderContainer .testCard h2 {
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 20px;
+    color: #545778;
+
+    margin-bottom: 15px;
+}
+
+.sliderContainer .testCard p {
+    font-weight: 400;
+    font-size: 16px;
+    color: #545778;
+
+    margin-bottom: 15px;
+}
+
+.sliderContainer .goButton {
+    background-color: #f86a6c00;
+    color: #545778;
+    border: 1px solid #545778;
+    border-radius: 40px;
+    padding: 5px 25px;
+    cursor: pointer;
+    margin: 0px 0 15px 0;
+
+    font-weight: 500;
+    font-size: 15px;
+    font-variant: small-caps;
+
+    transition: color 0.5s;
+}
+
+.sliderContainer .goButton:hover {
+    background-color: #e05558;
+    color: #fff;
+    border: 1px solid #e05558;
+}
+
+.sliderContainer .sliderControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sliderContainer .arrowButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+.sliderContainer .slideNumber {
+    margin: 0 20px 5px 20px;
+    font-weight: 500;
+    font-size: 16x;
+    line-height: 140%;
+    text-align: right;
+    color: #545778;
+}
+
+
+
+/* haveQuesion */
+.haveQuesion {
+    max-width: 1200px;
+    position: relative;
+    z-index: 200;
+    margin: auto;
+}
+
+.titleHaveQuesion {
+    margin: auto;
+}
+
+.titleHaveQuesion h3 {
+    z-index: 200;
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 32px;
+    font-variant: uppercase;
+    text-align: center;
+    color: #f86a6c;
+
+    margin-bottom: 35px;
+
+    margin-bottom: 10px;
+}
+
+.titleHaveQuesion p {
+    font-weight: 200;
+    font-size: 20px;
+    text-transform: lowercase;
+    text-align: center;
+    color: #545778;
+}
+
+.haveQuesionLinks {
+    max-width: 1134px;
+    margin: 40px auto 120px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.containerCopy {
+    position: relative;
+}
+
+.copyButton,
+.tgCopy {
+    padding: 10px 20px;
+    background-color: #54577800;
+    font-weight: 400;
+    font-size: 16px;
+    color: #f10f5d;
+    border: 2px solid #f10f5d;
+    border-radius: 50px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: left;
+
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.copyButton:hover,
+.tgCopy:hover {
+    background-color: #f10f5e6b;
+    border: 2px solid #f10f5e00;
+    color: #fff;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f86a6c;
+    border-radius: 50px;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.notification-enter {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+.notification-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.notification-exit {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.notification-exit-active {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+.iconCopyButton {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.tgLink {
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+    color: #f10f5d;
+}
+
+.tgCopy:hover .tgLink {
+    color: #fff;
+}

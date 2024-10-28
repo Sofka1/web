@@ -1,0 +1,289 @@
+.container {
+    max-width: 1200px;
+    margin: 30px auto 70px auto;
+    padding: 0;
+}
+
+.headerLinks {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 15px;
+}
+
+.headerLinks a {
+    font-weight: 400;
+    font-size: 14px;
+    color: #545778;
+    text-decoration: none;
+}
+
+.headerLinks p {
+    font-weight: 400;
+    font-size: 14px;
+    color: #545778;
+}
+
+.headerLinks span {
+    font-weight: 400;
+    font-size: 14px;
+    color: #FA8270;
+}
+
+.calendar {
+    width: 384px;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25);
+    background: #fff;
+    padding: 25px;
+}
+
+.calendarHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #B1B1B1;
+}
+
+.calendarHeader button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.calendarHeader h2 {
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #545778;
+}
+
+.daysOfWeek {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.dayHeader {
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #545778;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border-radius: 50%;
+    margin: 5px;
+    font-weight: 600;
+    font-size: 15px;
+    text-align: center;
+    color: #545778;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.weekend {
+    background-color: #FFB5B5;
+    color: white;
+}
+
+.weekday {
+    background-color: #ffffff;
+}
+
+.active {
+    background-color: #febf79;
+    color: #fff;
+}
+
+.past {
+    color: #54577880;
+}
+
+.registrationFrom {
+    margin: 35px 0 0 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    gap: 24px;
+}
+
+.timeSelection {
+    margin-top: 20px;
+}
+
+.service {
+    margin: 10px 0;
+}
+
+.availableTime{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 25px;
+}
+
+.timeServices{
+    width: 70px;
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FA8270;
+
+    padding: 0 5px 10px 5px;
+
+    border-bottom: 2px solid #B1B1B1;
+}
+
+.deocorLine{
+    width: 2px;
+    height: 60px;
+    background-color: #B1B1B1;
+
+}
+
+.infoAndOptionService{
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 5px 10px 5px;
+
+    border-bottom: 2px solid #B1B1B1;
+}
+
+.infoAndOptionService h4{
+    font-weight: 500;
+    font-size: 16px;
+    color: #545778;
+}
+
+.infoAndOptionService button{
+    border-radius: 40px;
+    padding: 8px 20px;
+    background-color: #545778;
+    border: none;
+
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+
+    cursor: pointer;
+    transition: 0.7s;
+}
+
+.infoAndOptionService button:hover{
+    background-color: #FA8270;
+}
+
+.timeSelectionBlock{
+    margin: 0;
+    width: 670px;
+    min-height: 350px;
+    padding: 25px 25px 10px 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25);
+    background: #fff;
+}
+
+.timeSelectionBlock h3{
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #545778;
+
+    margin-bottom: 20px;
+}
+
+.noTimeBlock{
+    margin: 0;
+    width: 670px;
+    height: 100%;
+    padding: 25px 25px 25px 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25);
+    background: #fff;
+
+    font-weight: 700;
+    font-size: 21px;
+    text-transform: uppercase;
+    color: #545778;
+    text-align: center;
+}
+
+
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* затемнение фона */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: #fff;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    text-align: center;
+}
+
+.modalContent h2 {
+    margin-top: 0;
+}
+
+.modalContent p {
+    margin: 10px 0;
+}
+
+.modalContent button {
+    padding: 10px 20px;
+    margin-top: 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modalContent button:hover {
+    background-color: #0056b3;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+}

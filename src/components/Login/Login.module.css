@@ -1,0 +1,202 @@
+@import url('../../../src/fonts/font/stylesheet.css');
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px 0 rgba(250, 130, 112, 0.25);
+    background: #fff;
+}
+
+.imageRegAndAuth {
+    width: 50%;
+    height: 100%;
+}
+
+.imageRegAndAuth img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.formContainer {
+    width: 50%;
+    padding: 33px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title {
+    margin-bottom: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 20px;
+}
+
+.title h2 {
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 32px;
+    text-transform: uppercase;
+    background: linear-gradient(144deg, #f0055c 0%, #ffc47a 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.titleLine {
+    width: 100%;
+    height: 2px;
+    transform: rotate(-180deg);
+    background: linear-gradient(144deg, #f0055c 0%, #ffc47a 100%);
+}
+
+.inputGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.inputFormWithTitle {
+    position: relative;
+    z-index: 1;
+}
+
+.inputFormWithTitle h6 {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #545778;
+    background-color: #fff;
+
+    padding: 0 5px;
+}
+
+.inputGroup input {
+    width: 560px;
+    padding: 15px 20px;
+    border: 2px solid #545778;
+    border-radius: 15px;
+    font-size: 16px;
+
+    margin-bottom: 34px;
+}
+
+.terms {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.rememberMe{
+    display: flex;
+    align-items: center;
+}
+
+.termsCheckBox {
+    margin-right: 10px;
+
+    border: 3px solid #545778;
+    border-radius: 2px;
+    width: 18px;
+    height: 18px;
+}
+
+.terms label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #545778;
+}
+
+.terms a {
+    font-weight: 700;
+    font-size: 14px;
+    color: #FA8270;
+    text-decoration: none;
+}
+
+.registerButton {
+    width: 100%;
+    padding: 15px 10px;
+    background-color: #fa8270;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.registerButton:hover {
+    background-color: #ff6f61;
+}
+
+.alreadyHaveAccount {
+    font-weight: 400;
+    font-size: 14px;
+    color: #545778;
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+.alreadyHaveAccount a {
+    color: #ff6f61;
+    text-decoration: none;
+}
+
+.socialTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.socialTitle .lineSocial{
+    width: 100%;
+    height: 1px;
+    background-color: #545778;
+}
+
+.socialTitle h5{
+    font-weight: 400;
+    font-size: 14px;
+    color: #545778;
+    white-space: nowrap;
+}
+
+.socialButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.socialBtn {
+    width: 30%;
+    padding: 10px;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.socialBtn img{
+    width: 24px;
+}
+
+.socialBtn:hover {
+    background-color: #f5f5f5;
+}
