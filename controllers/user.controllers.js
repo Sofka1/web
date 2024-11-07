@@ -129,7 +129,6 @@ class UserController {
         }
     }
 
-
     async uploadCover(req, res) {
         try {
             const userId = req.params.id;
@@ -152,6 +151,33 @@ class UserController {
         } catch (error) {
             console.error('Ошибка при загрузке фоновой картинки:', error);
             res.status(500).json({ message: 'Ошибка сервера' });
+        }
+    }
+
+    // Метод для получения всех записей пользователя
+    async getUserBookings(req, res) {
+        const { id } = req.params; // Извлекаем id пользователя из параметров запроса
+
+        try {
+            // Выполняем запрос к базе данных для получения записей
+            const userBookings = await req.pool.query(
+                `SELECT 
+                    b.id AS booking_id, 
+                    s.title AS service_title, 
+                    s.description AS service_description, 
+                    b.booking_date, 
+                    b.booking_time
+                FROM "Bookings" b
+                JOIN "Services" s ON b.service_id = s.id
+                WHERE b.user_id = $1`,
+                [id]
+            );
+
+            // Возвращаем записи пользователя
+            res.json(userBookings.rows);
+        } catch (error) {
+            console.error('Ошибка при получении записей пользователя:', error);
+            res.status(500).json({ message: 'Ошибка при получении записей пользователя' });
         }
     }
 }

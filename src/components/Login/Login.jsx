@@ -11,7 +11,7 @@ import img2 from '../imageForRegAndAuth/2.png';
 // import img6 from '../imageForRegAndAuth/6.png';
 
 const Login = () => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState({ 
         email: '',
         password: '',
     });
@@ -50,7 +50,8 @@ const Login = () => {
                     name: data.user.name,
                     surname: data.user.surname, // Фамилия
                     email: data.user.email,     // Почта
-                    phone: data.user.phone      // Телефон
+                    phone: data.user.phone,      // Телефон
+                    role: data.user.role
                 }));
 
                 // Очищаем ошибки

@@ -16,7 +16,7 @@ const TestCard = ({ title, description, background }) => {
       <button className={style.goButton}>Перейти</button>
     </div>
   );
-};
+}; 
 
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -358,7 +358,7 @@ const Main = () => {
             limitedServices.map((service) => (
               <div key={service.id} className={style.card1}>
                 <div className={style.cardTitle}>
-                  <p>{service.title}</p> {/* Исправляем на service.title, если используется title */}
+                  <p>{service.title}</p>
                 </div>
                 <div className={style.cardInfo}>
                   <div className={style.duration}>

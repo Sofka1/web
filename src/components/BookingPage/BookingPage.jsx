@@ -236,7 +236,19 @@ const BookingPage = () => {
         ));
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        // Получаем день, месяц и год
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}.${month}.${year}`;
+    };
 
+    const formatTime = (timeString) => {
+        // Время уже в формате 'HH:MM', так что можно использовать его напрямую
+        return timeString.slice(0, 5);
+    };
 
     return (
         <div className={style.container}>
@@ -264,10 +276,24 @@ const BookingPage = () => {
                     <div className={style.modalContent}>
                         <button className={style.closeButton} onClick={() => setShowModal(false)}>✖</button>
                         <h2>Запись подтверждена!</h2>
-                        <p>Вы успешно записаны на {bookingDetails.title}</p>
-                        <p>Дата: {bookingDetails.date}</p>
-                        <p>Время: {bookingDetails.time}</p>
-                        <button onClick={() => setShowModal(false)}>Ок</button>
+                        <h3>Спасибо за запись на прием!</h3>
+                        <div className={style.detalsBookings}>
+                            <h4>Детали вашей записи:</h4>
+                            <div className={style.detalBooking}>
+                                <img src={require('./icons/calendar.png')}/>
+                                <p>{formatDate(bookingDetails.date)}</p>
+                            </div>
+                            <div className={style.detalBooking}>
+                                <img src={require('./icons/clock.png')}/>
+                                <p>{formatTime(bookingDetails.time)}</p>
+                            </div>
+                            <div className={style.detalBooking}>
+                                <img src={require('./icons/book.png')}/>
+                                <p>{bookingDetails.title}</p>
+                            </div>
+                        </div>
+                        <p>Если у вас есть вопросы или нужно изменить запись, свяжитесь с нами.</p>
+                        <h6>Ждем вас!</h6>
                     </div>
                 </div>
             )}

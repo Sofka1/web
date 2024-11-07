@@ -104,6 +104,13 @@
     margin-bottom: 15px;
 }
 
+.decorLine2 {
+    border-radius: 100%;
+    width: 1px;
+    height: 50px;
+    background-color: #B1B1B1;
+}
+
 .userPage {
     max-width: 1200px;
     margin: 40px auto;
@@ -124,15 +131,17 @@
     box-shadow: 0 4px 16px 0 rgba(17, 34, 17, 0.25);
     background: #fff;
 
-    text-align: left;
+    text-align: center;
 }
 
 .userMenuPoint {
-    width: 100%;
+    width: 20%;
+    text-align: center;
 }
 
 .menuItem {
     width: max-content;
+    text-wrap: nowrap;
     padding: 0px 5px 25px 5px;
     cursor: pointer;
     text-align: left;
@@ -142,6 +151,8 @@
     font-size: 16px;
     line-height: 140%;
     color: #545778;
+
+    text-align: center;
 }
 
 .menuItem:hover {
@@ -290,7 +301,8 @@
     margin: 0 0 40px 0;
 }
 
-.UpcomingServices p, .pastServices p {
+.UpcomingServices p,
+.pastServices p {
     font-weight: 500;
     font-size: 18px;
     text-align: left;
@@ -341,7 +353,7 @@
 }
 
 
-.deleteService{
+.deleteService {
     cursor: pointer;
     border-radius: 10px;
     padding: 10px 20px;
@@ -354,7 +366,7 @@
     color: #fff;
 }
 
-.reviewsService{
+.reviewsService {
     display: flex;
     align-items: center;
     justify-content: left;
@@ -372,7 +384,7 @@
     color: #545778;
 }
 
-.reviewsService img{
+.reviewsService img {
     width: 24px;
 }
 
@@ -386,7 +398,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #54577879; /* затемнение фона */
+    background-color: #54577879;
+    /* затемнение фона */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -425,4 +438,194 @@
     background: none;
     border: none;
     cursor: pointer;
+}
+
+
+
+
+/* ВКЛАДКА С ПОЛЬЗОВАТЕЛМЯ */
+.headerUsers {
+    width: 1255px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    padding: 0;
+}
+
+.searchUsers {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    border: 2px solid #545778;
+    border-radius: 50px;
+    padding: 0px 0px 0px 15px;
+
+    margin-bottom: 5px;
+}
+
+.searchUsers img {
+    width: 24px;
+}
+
+.searchUsers input {
+    width: 200px;
+    padding: 6px 8px;
+    background-color: #ffffff00;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 140%;
+    text-align: left;
+    color: #545778;
+    border: none;
+}
+
+.searchUsers input:focus {
+    outline: none;
+}
+
+.pagination {
+    margin: 50px auto 0 auto;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+
+    font-weight: 500;
+    font-size: 16px;
+    color: #545778;
+}
+
+.pagination button {
+    cursor: pointer;
+    border: none;
+    background-color: #ffffff00;
+
+    font-weight: 500;
+    font-size: 16px;
+    color: #545778;
+    padding: 3px;
+}
+
+
+
+.userList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.userItem {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 25px;
+
+    border-radius: 20px;
+    width: 1200px;
+    padding: 25px 30px;
+    box-shadow: 0 4px 16px 0 rgba(17, 34, 17, 0.25);
+    background: #fff;
+
+    list-style: none;
+}
+
+.mainInfaUser{
+    min-width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 38px;
+}
+
+.userIndexBackgroung {
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 20px;
+    background-color: #545778;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userIndexBackgroung span {
+    margin: auto;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 140%;
+    text-align: center;
+    color: #fff;
+}
+
+.usersName {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 140%;
+    color: #545778;
+}
+
+
+
+.userUpcomingAppointments, .noUpcomingAppointments{
+    width: 300px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    color: #545778;
+}
+
+.userUpcomingAppointments span{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    text-align: center;
+    color: #545778;
+}
+
+.userUpcomingAppointments ul{
+    list-style: none;
+}
+
+.userUpcomingAppointments ul li{
+    font-weight: 500;
+    font-size: 16px;
+    text-align: left;
+    color: #FA8270;
+}
+
+.userTotalServices{
+    width: 300px;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    text-align: center;
+    color: #545778;
+}
+
+.userTotalServices span{
+    font-weight: 500;
+    font-size: 16px;
+    text-align: left;
+    color: #FA8270;
+
+    margin-left: 5px;
+}
+
+.deleteUserButton{
+    cursor: pointer;
+    padding: 8px;
+    background-color: #FA8270;
+    border: none;
+    border-radius: 100%;
+}
+
+.deleteUserButton img{
+    width: 24px;
 }

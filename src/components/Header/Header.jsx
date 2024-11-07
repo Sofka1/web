@@ -5,6 +5,7 @@ import { Link as ScrollLink } from 'react-scroll';
 
 const Header = () => {
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false); // Добавляем состояние для роли администратора
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -17,9 +18,17 @@ const Header = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser); // Устанавливаем пользователя, если данные есть
+      setUser(parsedUser);
+
+      // Проверка роли пользователя
+      if (parsedUser.role === 'Admin') {
+        setIsAdmin(true); // Устанавливаем состояние isAdmin в true, если роль администратора
+      } else {
+        setIsAdmin(false); // В противном случае оставляем false
+      }
     } else {
-      setUser(null); // Если данных нет, пользователь не авторизован
+      setUser(null);
+      setIsAdmin(false);
     }
   }, []);
 
@@ -29,9 +38,17 @@ const Header = () => {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser); // Обновляем состояние пользователя
+        setUser(parsedUser);
+
+        // Проверка роли пользователя
+        if (parsedUser.role === 'Admin') {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
       } else {
-        setUser(null); // Если данные удалены
+        setUser(null);
+        setIsAdmin(false);
       }
     };
 
@@ -45,7 +62,8 @@ const Header = () => {
   // Функция выхода
   const handleLogout = () => {
     localStorage.removeItem('user'); // Очищаем данные пользователя из localStorage
-    setUser(null); // Сбрасываем состояние пользователя
+    setUser(null);
+    setIsAdmin(false); // Сбрасываем состояние isAdmin
     navigate('/login'); // Перенаправляем на страницу авторизации
   };
 
@@ -66,26 +84,37 @@ const Header = () => {
             <li><ScrollLink className={style.callButton} to="orderCall" smooth={true} duration={500}>Заказать звонок</ScrollLink></li>
 
             {/* Вход пользователя */}
-
             {user ? (
               <>
-                <button className={style.buttonExit} onClick={handleLogout}>Выйти</button>
-                {/* Отображаем имя пользователя и аватар */}
                 <div className={style.userInfo}>
-                  <Link to={`/userPage/${user.id}`}>
+                  <Link
+                    to={isAdmin ? `/adminPage/${user.id}` : `/userPage/${user.id}`}
+                  >
                     <img
                       src={user.userImage ? user.userImage : require('./image/defaultAvatar.png')}
                       alt="User Avatar"
                       className={style.avatar}
                     />
                   </Link>
-                  <Link to={`/userPage/${user.id}`}>{user.name}</Link> {/* Имя пользователя */}
+                  <Link
+                    to={isAdmin ? `/adminPage/${user.id}` : `/userPage/${user.id}`}
+                  >
+                    {user.name}
+                  </Link>
                 </div>
+                {/* <button className={style.buttonExit} onClick={handleLogout}>Выйти</button> */}
               </>
             ) : (
               <>
-                {/* Если пользователь не авторизован, показываем ссылки на авторизацию и регистрацию */}
-                <li><Link to="/login"><img className={style.userImage} src={require('./image/user.png')} alt="user" /></Link></li>
+                <li>
+                  <Link to="/login">
+                    <img
+                      className={style.userImage}
+                      src={require('./image/user.png')}
+                      alt="user"
+                    />
+                  </Link>
+                </li>
               </>
             )}
 

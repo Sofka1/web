@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import style from './UserPage.module.css';
+import style from './AdminPage.module.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const UserPage = () => {
+const AdminPage = () => {
     const { id } = useParams(); // Получаем ID пользователя из URL
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true); // Состояние для загрузки
@@ -23,7 +23,67 @@ const UserPage = () => {
     });
     const navigate = useNavigate(); // Для перенаправления пользователя
     const [showModal, setShowModal] = useState(false); // состояние для отображения модального окна
+    const [users, setUsers] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 5;
 
+
+
+
+
+    // Подгружаем пользователей и их данные о записях
+    useEffect(() => {
+        const fetchUsersData = async () => {
+            try {
+                // Загружаем список всех пользователей
+                const usersResponse = await fetch('http://localhost:8080/api/user');
+                const usersData = await usersResponse.json();
+
+                if (usersResponse.ok) {
+                    // Получаем записи для каждого пользователя
+                    const usersWithAppointments = await Promise.all(
+                        usersData.map(async (user) => {
+                            const appointmentsResponse = await fetch(`http://localhost:8080/api/user/${user.id}/bookings`);
+                            const appointmentsData = await appointmentsResponse.json();
+
+                            console.log(appointmentsData);
+
+                            // Фильтруем предстоящие записи
+                            const upcomingAppointments = appointmentsData.filter(appointment => {
+                                const appointmentDate = new Date(Date.parse(appointment.booking_date));
+                                const currentDate = new Date();
+
+                                // Сбрасываем время для корректного сравнения только по дате
+                                appointmentDate.setHours(0, 0, 0, 0);
+                                currentDate.setHours(0, 0, 0, 0);
+
+                                return appointmentDate > currentDate; // Сравниваем только дату, без учета времени
+                            });
+
+                            return {
+                                ...user,
+                                upcomingAppointments,
+                                totalServices: appointmentsData.length, // Общее количество записей (прошедших и предстоящих)
+                            };
+                        })
+                    );
+
+                    setUsers(usersWithAppointments); // Сохраняем обновленных пользователей с записями
+                } else {
+                    console.error('Ошибка загрузки списка пользователей:', usersData.message);
+                }
+            } catch (error) {
+                console.error('Ошибка запроса:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUsersData();
+    }, []);
+
+    // Подгружаем данные админа
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -32,17 +92,6 @@ const UserPage = () => {
 
                 if (response.ok) {
                     setUser(data);
-                    // Загружаем услуги пользователя
-                    const servicesResponse = await fetch(`http://localhost:8080/api/user/${id}/bookings`);
-                    const servicesData = await servicesResponse.json();
-                    if (servicesResponse.ok) {
-                        setUser((prevUser) => ({
-                            ...prevUser,
-                            services: servicesData,
-                        }));
-                    } else {
-                        console.error('Ошибка загрузки услуг:', servicesData.message);
-                    }
                 } else {
                     console.error('Ошибка загрузки данных пользователя:', data.message);
                 }
@@ -55,7 +104,6 @@ const UserPage = () => {
 
         fetchUserData();
     }, [id]);
-
 
     // Загрузка данных пользователя из localStorage
     useEffect(() => {
@@ -70,6 +118,8 @@ const UserPage = () => {
             });
         }
     }, []);
+
+
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -190,34 +240,6 @@ const UserPage = () => {
         }
     };
 
-    const handleCancelBooking = async (bookingId) => {
-        try {
-            // Отправляем запрос на сервер для отмены записи
-            const response = await fetch(`http://localhost:8080/api/bookings/${bookingId}`, {
-                method: 'DELETE',
-            });
-
-            if (response.ok) {
-                // Обновляем список услуг после отмены записи
-                setUser((prevUser) => ({
-                    ...prevUser,
-                    services: prevUser.services.filter(service => service.id !== bookingId)
-                }));
-                setShowModal(true);
-                // Устанавливаем таймер для перезагрузки страницы
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000); // Задержка в 3 секунды (3000 миллисекунд)
-            } else {
-                const data = await response.json();
-                alert(`Ошибка при отмене записи: ${data.message}`);
-            }
-        } catch (error) {
-            console.error('Ошибка при отмене записи:', error);
-            alert('Произошла ошибка при отмене записи');
-        }
-    };
-
     if (loading) {
         return <p>Загрузка...</p>; // Отображаем индикатор загрузки
     }
@@ -226,25 +248,67 @@ const UserPage = () => {
         return <p>Пользователь не найден</p>;
     }
 
-    const formatDate = (dateString) => {
+    // Фильтрация пользователей на основе поискового запроса
+    const filteredUsers = users.filter(user =>
+        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    // Определяем пользователей, которые должны быть показаны на текущей странице
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+    // Определяем количество страниц
+    const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+    // Функция для перехода на следующую или предыдущую страницу
+    const handlePageChange = (newPage) => {
+        if (newPage > 0 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
+
+    // Обработчик изменения поиска
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        setCurrentPage(1); // Сбрасываем на первую страницу при поиске
+    };
+
+    const formatAppointmentDate = (dateString) => {
         const date = new Date(dateString);
-        // Получаем день, месяц и год
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();
-        return `${day}.${month}.${year}`;
+
+        return `- ${day}.${month}.${year}`;
     };
 
-    const formatTime = (timeString) => {
-        // Время уже в формате 'HH:MM', так что можно использовать его напрямую
-        return timeString.slice(0, 5);
+    function formatAppointmentTime(time) {
+        if (!time) return 'Нет времени';
+        const [hours, minutes] = time.split(':');
+        return `${hours}:${minutes}`;
+    }
+
+    // Функция для удаления пользователя
+    const deleteUser = async (userId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/user/${userId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                // Удаляем пользователя из состояния после успешного запроса
+                setUsers(users.filter(user => user.id !== userId));
+                console.log('Пользователь успешно удален');
+            } else {
+                const errorData = await response.json();
+                console.error('Ошибка при удалении пользователя:', errorData.message);
+            }
+        } catch (error) {
+            console.error('Ошибка запроса:', error);
+        }
     };
-
-    const currentDate = new Date();
-
-    // Проверка наличия данных перед фильтрацией
-    const upcomingServices = user.services ? user.services.filter(service => new Date(service.booking_date) >= currentDate) : [];
-    const pastServices = user.services ? user.services.filter(service => new Date(service.booking_date) < currentDate) : [];
 
     return (
         <div className={style.container}>
@@ -307,10 +371,10 @@ const UserPage = () => {
 
                     <div className={style.userMenuPoint}>
                         <div
-                            className={`${style.menuItem} ${activeTab === 'services' ? style.active : ''}`}
-                            onClick={() => handleTabClick('services')}
+                            className={`${style.menuItem} ${activeTab === 'users' ? style.active : ''}`}
+                            onClick={() => handleTabClick('users')}
                         >
-                            Мои записи
+                            Список пользователей
                         </div>
                     </div>
 
@@ -318,10 +382,32 @@ const UserPage = () => {
 
                     <div className={style.userMenuPoint}>
                         <div
-                            className={`${style.menuItem} ${activeTab === 'articles' ? style.active : ''}`}
-                            onClick={() => handleTabClick('articles')}
+                            className={`${style.menuItem} ${activeTab === 'services' ? style.active : ''}`}
+                            onClick={() => handleTabClick('services')}
                         >
-                            Сохраненные статьи
+                            Список услуг
+                        </div>
+                    </div>
+
+                    <div className={style.decorLine}></div>
+
+                    <div className={style.userMenuPoint}>
+                        <div
+                            className={`${style.menuItem} ${activeTab === 'tests' ? style.active : ''}`}
+                            onClick={() => handleTabClick('tests')}
+                        >
+                            Тесты
+                        </div>
+                    </div>
+
+                    <div className={style.decorLine}></div>
+
+                    <div className={style.userMenuPoint}>
+                        <div
+                            className={`${style.menuItem} ${activeTab === 'reviews' ? style.active : ''}`}
+                            onClick={() => handleTabClick('reviews')}
+                        >
+                            Отзывы
                         </div>
                     </div>
                 </div>
@@ -446,68 +532,110 @@ const UserPage = () => {
                         </div>
                     )}
 
-                    {activeTab === 'services' && (
+                    {activeTab === 'users' && (
                         <div>
-                            <div className={style.UpcomingServices}>
-                                <h2>Предстоящие</h2>
-                                {upcomingServices.length > 0 ? (
-                                    <div className={style.serviceList}>
-                                        {upcomingServices.map(service => (
-                                            <div className={style.serviceCard}>
-                                                <div key={service.booking_id}>
-                                                    {/* Отображение данных услуги */}
-                                                    <h3>{service.service_title}</h3>
-                                                    <div className={style.serviceDate}>
-                                                        <img src={require('./image/icons/calendar.png')} alt="" />
-                                                        <p>{formatDate(service.booking_date)} - {formatTime(service.booking_time)}</p>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <button onClick={() => handleCancelBooking(service.booking_id)} className={style.deleteService}>
-                                                        Отменить запись
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <p>Нет предстоящих записей</p>
-                                )}
+                            {/* шапка */}
+                            <div className={style.headerUsers}>
+                                <h2>Пользователи</h2>
+                                <div className={style.searchUsers}>
+                                    <img src={require('./image/icons/search.png')} />
+                                    <input
+                                        type="text"
+                                        placeholder="Поиск"
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                        className={style.searchInput}
+                                    />
+                                </div>
                             </div>
-                            <div className={style.pastServices}>
-                                <h2>Прошедшие</h2>
-                                {pastServices.length > 0 ? (
-                                    <div className={style.serviceList}>
-                                        {pastServices.map(service => (
-                                            <div className={style.serviceCard}> 
-                                                <div key={service.booking_id}>
-                                                    {/* Отображение данных услуги */}
-                                                    <h3>{service.service_title}</h3>
-                                                    <div className={style.serviceDate}>
-                                                        <img src={require('./image/icons/calendar.png')} />
-                                                        <p>{formatDate(service.booking_date)} - {formatTime(service.booking_time)}</p>
-                                                    </div>
+
+                            {user ? (
+                                <ul className={style.userList}>
+                                    {users.slice((currentPage - 1) * 5, currentPage * 5).map((user, index) => (
+                                        <div className={style.userItem} key={user.id}>
+                                            <div className={style.mainInfaUser}>
+                                                {/* Индекс пользователя */}
+                                                <div className={style.userIndexBackgroung}>
+                                                    <span className={style.userIndex}>
+                                                        {index + 1 + (currentPage - 1) * 5}
+                                                    </span>
                                                 </div>
-                                                <div>
-                                                    <button className={style.reviewsService}>
-                                                        <img src={require('./image/icons/message.png')} />
-                                                        Оставить отзыв
-                                                    </button>
+                                                <div className={style.nameListUser}>
+                                                    <span className={style.usersName}>{user.name} {user.surname}</span>
                                                 </div>
                                             </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <p>Нет прошедших записей</p>
-                                )}
+
+                                            <div className={style.decorLine2}></div>
+
+                                            {/* Предстоящие записи */}
+                                            {user.upcomingAppointments && user.upcomingAppointments.length > 0 ? (
+                                                <div className={style.userUpcomingAppointments}>
+                                                    <span>Предстоящие записи:</span>
+                                                    <ul>
+                                                        {user.upcomingAppointments.map((appointment, idx) => (
+                                                            <li key={idx}>
+                                                                {appointment.booking_date ? `${formatAppointmentTime(appointment.booking_time)} ${formatAppointmentDate(appointment.booking_date)}`
+                                                                    : 'Нет даты'}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            ) : (
+                                                <div className={style.noUpcomingAppointments}>
+                                                    <span>Нет предстоящих записей</span>
+                                                </div>
+                                            )}
+
+                                            <div className={style.decorLine2}></div>
+
+
+                                            {/* Общее количество услуг */}
+                                            <div className={style.userTotalServices}>
+                                                <p>Общее количество услуг: <span>{user.totalServices}</span></p>
+                                            </div>
+
+                                            <div className={style.decorLine2}></div>
+
+                                            {/* Кнопка удаления пользователя */}
+                                            <button onClick={() => deleteUser(user.id)} className={style.deleteUserButton}>
+                                                <img src={require('./image/icons/trash.png')}/>
+                                            </button>
+                                        </div>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <div>Загрузка данных пользователя...</div> // Показать индикатор загрузки
+                            )}
+
+
+                            {/* переключалка */}
+                            <div className={style.pagination}>
+                                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                                    &lt;
+                                </button>
+                                <span>{currentPage} из {totalPages}</span>
+                                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                                    &gt;
+                                </button>
                             </div>
                         </div>
                     )}
 
-                    {activeTab === 'articles' && (
+                    {activeTab === 'services' && (
                         <div>
-                            <h2>Сохраненные статьи</h2>
-                            <p>Здесь будут отображены ваши сохраненные статьи.</p>
+                            <h2>Список услуг</h2>
+                        </div>
+                    )}
+
+                    {activeTab === 'tests' && (
+                        <div>
+                            <h2>Список тестов</h2>
+                        </div>
+                    )}
+
+                    {activeTab === 'reviews' && (
+                        <div>
+                            <h2>Отзывы</h2>
                         </div>
                     )}
                 </div>
@@ -525,4 +653,4 @@ const UserPage = () => {
     );
 };
 
-export default UserPage;
+export default AdminPage;

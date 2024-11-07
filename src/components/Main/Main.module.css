@@ -184,7 +184,7 @@
 }
 
 
-/* ////// */
+/* Услуги */
 .inquiries {
     z-index: 200;
     margin: 150px auto;
@@ -223,27 +223,6 @@
     box-shadow: 0 4px 10px 0 rgba(250, 130, 112, 0.25);
     background: linear-gradient(45deg, #feecf1 0%, #fff7f3 100%);
     border-radius: 10px;
-}
-
-.card2 {
-    z-index: 200;
-    margin: 0 24px;
-    width: 384px;
-    height: 200px;
-    padding: 35px 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px 0 rgba(250, 130, 112, 0.25);
-    background: linear-gradient(90deg, #fbfefe 0%, #fcfefe 100%);
-}
-
-.card3 {
-    z-index: 200;
-    width: 384px;
-    height: 200px;
-    padding: 35px 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px 0 rgba(250, 130, 112, 0.25);
-    background: linear-gradient(135deg, #fffef4 0%, #fff2f0 100%);
 }
 
 .cardTitle {
@@ -868,4 +847,96 @@
 
 .tgCopy:hover .tgLink {
     color: #fff;
+}
+
+
+
+
+/* АДАПТИВ БЛЯ ЕБАННЫЙ */
+@media(max-width:768px) {
+    .conteiner {
+        margin: 20px auto 0;
+        max-width: 680px;
+    }
+
+    .information {
+        max-width: 440px;
+    }
+
+    .decoration img {
+        max-width: 310px;
+    }
+
+    .title {
+        margin-bottom: 40px;
+    }
+
+    .title h1 {
+        font-weight: 400;
+        font-size: 40px;
+    }
+
+    .title h2 {
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .information .enroll {
+        padding: 8px 20px;
+        width: 134px;
+        font-size: 16px;
+
+    }
+
+
+    /* aboutMe */
+    .aboutMe {
+        margin-top: 50px;
+        max-width: 680px;
+    }
+
+    .aboutMe img {
+        max-width: 220px;
+        margin: 0 31px 0 0;
+    }
+
+    .titleAboutMe {
+        margin-bottom: 25px;
+    }
+
+    .titleAboutMe h2 {
+        font-size: 32px;
+        margin-right: 15px;
+    }
+
+    .aboutMeInformation p {
+        font-variant: normal;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+
+    /* Услуги */
+    .inquiries {
+        margin: 50px auto;
+        max-width: 680px;
+    }
+
+    .inquiriesTitle {
+        margin-bottom: 25px;
+    }
+
+    .serviceCards {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .card1 {
+        width: 270px;
+        /* margin: auto; */
+    }
+
+    .cardTitle p {
+        font-size: 18px;
+    }
 }

@@ -11,6 +11,7 @@ import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import BookingPage from './components/BookingPage/BookingPage';
 import UserPage from './components/UserPage/UserPage';
+import AdminPage from './components/AdminPage/AdminPage';
 
 const App = () => {
 
@@ -28,6 +29,7 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path="/booking/:id" element={<BookingPage />} />
           <Route path='/userPage/:id' element={<UserPage/>}/>
+          <Route path='/adminPage/:id' element={<AdminPage/>}/>
         </Routes>
 
         <Footer />

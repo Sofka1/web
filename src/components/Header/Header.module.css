@@ -41,6 +41,7 @@
   transition: color 0.3s;
 
   cursor: pointer;
+  text-wrap: nowrap;
 }
 
 .nav ul li .callButton {

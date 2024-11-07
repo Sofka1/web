@@ -116,7 +116,8 @@ const Registration = () => {
                     name: data.user.name,
                     surname: data.user.surname, // Фамилия
                     email: data.user.email,     // Почта
-                    phone: data.user.phone      // Телефон
+                    phone: data.user.phone,     // Телефон 
+                    role: data.user.role
                 }));
 
                 window.dispatchEvent(new Event("storage"));
