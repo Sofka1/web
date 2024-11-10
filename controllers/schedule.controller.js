@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
-const path = require('path');
+const path = require('path'); 
 
 class ScheduleController {
     // Создаем новый график

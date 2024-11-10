@@ -3,13 +3,32 @@ import { useParams } from 'react-router-dom';
 import style from './OneServices.module.css';
 import { fetchServices } from '../../ServicesData'; // Импортируем функцию для получения данных
 import { Link } from 'react-router-dom';
-import reviewsData from '../../ReviewsData'; // Импортируем отзывы
 
 const OneServices = () => {
     const { id } = useParams(); // Получаем ID из URL
     const [service, setService] = useState(null); // Состояние для выбранной услуги
     const [loading, setLoading] = useState(true); // Состояние для отслеживания загрузки
     const defaultServicesImage = require('../../imageServices/1.png');
+    const [reviews, setReviews] = useState([]);
+    const [error, setError] = useState(null);
+
+    // Функция для получения отзывов
+    const fetchReviews = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/reviews/service/${id}`);
+            const data = await response.json();
+            setReviews(data); // Сохраняем отзывы в состоянии
+            setLoading(false); // Останавливаем индикатор загрузки
+        } catch (error) {
+            setError('Ошибка при загрузке отзывов');
+            setLoading(false);
+        }
+    };
+
+
+    useEffect(() => {
+        fetchReviews(); // Загружаем отзывы при монтировании компонента
+    }, [id]);
 
     // Загрузка данных услуги
     useEffect(() => {
@@ -42,9 +61,6 @@ const OneServices = () => {
             </div>
         );
     }
-
-    // Находим отзывы, которые относятся к этой услуге
-    const filteredReviews = reviewsData.filter((review) => review.serviceName === service.name);
 
     // Компонент для отображения звёздочек
     const StarRating = ({ rating }) => {
@@ -96,7 +112,7 @@ const OneServices = () => {
             <div className={style.mainContent}>
                 {/* image */}
                 <div className={style.serviceImage}>
-                    <img src={service.imagePath ? service.imagePath : defaultServicesImage}/>
+                    <img src={service.imagePath ? service.imagePath : defaultServicesImage} />
                 </div>
 
                 {/* info about services */}
@@ -150,14 +166,18 @@ const OneServices = () => {
                 </div>
 
                 <div className={style.testimonials}>
-                    {filteredReviews.length > 0 ? (
+                    {loading ? (
+                        <p>Загрузка отзывов...</p>
+                    ) : error ? (
+                        <p>{error}</p>
+                    ) : reviews.length > 0 ? (
                         <div className={style.reviewContainer}>
-                            {filteredReviews.map((review, index) => (
-                                <div key={index} className={style.reviewCard} style={{ background: backgroundGradients[index % backgroundGradients.length] }}>
+                            {reviews.map((review, index) => (
+                                <div key={review.id} className={style.reviewCard} style={{ background: backgroundGradients[index % backgroundGradients.length] }}>
                                     <div className={style.mainUserInfo}>
                                         <div className={style.infoUserForRev}>
                                             <div className={style.avatarUser}>
-                                                <img src={review.avatar} alt={`Avatar of ${review.name}`} />
+                                                <img src={review.avatar || require('./image/defaultAvatar.png')} />
                                             </div>
                                             <p className={style.nameUserForRevi}>{review.name}</p>
                                         </div>

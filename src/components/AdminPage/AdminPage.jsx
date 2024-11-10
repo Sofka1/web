@@ -21,16 +21,68 @@ const AdminPage = () => {
         phone: false,
         email: false,
     });
-    const navigate = useNavigate(); // Для перенаправления пользователя
+    const [currentServicePage, setCurrentServicePage] = useState(1);
     const [showModal, setShowModal] = useState(false); // состояние для отображения модального окна
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [serviceSearchTerm, setServiceSearchTerm] = useState(''); // состояние для поиска услуг
     const [currentPage, setCurrentPage] = useState(1);
+    const [services, setServices] = useState([]); // добавлено для хранения списка услуг
     const usersPerPage = 5;
+    const navigate = useNavigate(); // Для перенаправления пользователя
+    // Состояние для отображения модального окна и хранения id удаляемой услуги
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [serviceToDelete, setServiceToDelete] = useState(null);
+    const filteredServices = services.filter(service =>
+        service.title.toLowerCase().includes(serviceSearchTerm.toLowerCase())
+    );
 
+    const handleServiceSearchChange = (e) => {
+        setServiceSearchTerm(e.target.value);
+    };
 
+    const handleAddService = () => {
+        // Логика для открытия формы добавления
+    };
 
+    const handleEditService = (serviceId) => {
+        // Логика для редактирования услуги
+    };
 
+    const handleDeleteService = (serviceId) => {
+        setServiceToDelete(serviceId);
+        setShowDeleteModal(true);
+    };
+
+    // Обработчик для подтверждения удаления услуги
+    const confirmDeleteService = async () => {
+        if (serviceToDelete) {
+            try {
+                const response = await fetch(`http://localhost:8080/api/services/${serviceToDelete}`, {
+                    method: 'DELETE',
+                });
+
+                if (response.ok) {
+                    setServices(services.filter(service => service.id !== serviceToDelete));
+                    console.log('Услуга успешно удалена');
+                } else {
+                    console.error('Ошибка при удалении услуги');
+                }
+            } catch (error) {
+                console.error('Ошибка запроса:', error);
+            } finally {
+                // Закрываем модальное окно и сбрасываем состояние
+                setShowDeleteModal(false);
+                setServiceToDelete(null);
+            }
+        }
+    };
+
+    // Обработчик для закрытия модального окна
+    const closeDeleteModal = () => {
+        setShowDeleteModal(false);
+        setServiceToDelete(null);
+    };
 
     // Подгружаем пользователей и их данные о записях
     useEffect(() => {
@@ -46,8 +98,6 @@ const AdminPage = () => {
                         usersData.map(async (user) => {
                             const appointmentsResponse = await fetch(`http://localhost:8080/api/user/${user.id}/bookings`);
                             const appointmentsData = await appointmentsResponse.json();
-
-                            console.log(appointmentsData);
 
                             // Фильтруем предстоящие записи
                             const upcomingAppointments = appointmentsData.filter(appointment => {
@@ -119,7 +169,25 @@ const AdminPage = () => {
         }
     }, []);
 
+    // useEffect для загрузки услуг
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/api/getAllServices');
+                const data = await response.json();
 
+                if (response.ok) {
+                    setServices(data); // Сохраняем список услуг в состоянии
+                } else {
+                    console.error('Ошибка загрузки списка услуг:', data.message);
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке списка услуг:', error);
+            }
+        };
+
+        fetchServices();
+    }, []);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -127,9 +195,12 @@ const AdminPage = () => {
 
     // Функция для выхода пользователя
     const handleLogout = () => {
-        localStorage.removeItem('user'); // Удаляем данные пользователя из localStorage
-        navigate('/main'); // Перенаправляем на страницу авторизации
-    };
+        localStorage.removeItem('user');
+        setUser(null);
+        navigate('/main');
+        window.location.reload(); // Перезагружает страницу, чтобы обновить интерфейс
+      };
+      
 
     // Функция для удаления аккаунта
     const handleDeleteAccount = async () => {
@@ -248,6 +319,24 @@ const AdminPage = () => {
         return <p>Пользователь не найден</p>;
     }
 
+    const servicesPerPage = 5;
+
+    // Отфильтрованные услуги на текущей странице
+    const indexOfLastService = currentServicePage * servicesPerPage;
+    const indexOfFirstService = indexOfLastService - servicesPerPage;
+    const currentServices = filteredServices.slice(indexOfFirstService, indexOfLastService);
+
+    // Общее количество страниц для услуг
+    const totalServicePages = Math.ceil(filteredServices.length / servicesPerPage);
+
+    // Функция для перехода на следующую или предыдущую страницу услуг
+    const handleServicePageChange = (newPage) => {
+        if (newPage > 0 && newPage <= totalServicePages) {
+            setCurrentServicePage(newPage);
+        }
+    };
+
+
     // Фильтрация пользователей на основе поискового запроса
     const filteredUsers = users.filter(user =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -310,6 +399,7 @@ const AdminPage = () => {
         }
     };
 
+
     return (
         <div className={style.container}>
             <div className={style.headerUserPage}>
@@ -351,7 +441,6 @@ const AdminPage = () => {
                         <p>{user.email}</p>
                     </div>
                 </div>
-
             </div>
 
             <div className={style.userPage}>
@@ -414,6 +503,7 @@ const AdminPage = () => {
 
                 {/* Контент, который меняется в зависимости от активной вкладки */}
                 <div className={style.content}>
+                    {/* Личная информация */}
                     {activeTab === 'account' && (
                         <div>
                             <h2>Данные аккаунта</h2>
@@ -532,6 +622,7 @@ const AdminPage = () => {
                         </div>
                     )}
 
+                    {/* Список всех пользователей и их записи */}
                     {activeTab === 'users' && (
                         <div>
                             {/* шапка */}
@@ -551,7 +642,7 @@ const AdminPage = () => {
 
                             {user ? (
                                 <ul className={style.userList}>
-                                    {users.slice((currentPage - 1) * 5, currentPage * 5).map((user, index) => (
+                                    {currentUsers.map((user, index) => (
                                         <div className={style.userItem} key={user.id}>
                                             <div className={style.mainInfaUser}>
                                                 {/* Индекс пользователя */}
@@ -598,7 +689,7 @@ const AdminPage = () => {
 
                                             {/* Кнопка удаления пользователя */}
                                             <button onClick={() => deleteUser(user.id)} className={style.deleteUserButton}>
-                                                <img src={require('./image/icons/trash.png')}/>
+                                                <img src={require('./image/icons/trash.png')} />
                                             </button>
                                         </div>
                                     ))}
@@ -606,8 +697,6 @@ const AdminPage = () => {
                             ) : (
                                 <div>Загрузка данных пользователя...</div> // Показать индикатор загрузки
                             )}
-
-
                             {/* переключалка */}
                             <div className={style.pagination}>
                                 <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
@@ -621,21 +710,151 @@ const AdminPage = () => {
                         </div>
                     )}
 
+                    {/* Список всех услуг */}
                     {activeTab === 'services' && (
                         <div>
-                            <h2>Список услуг</h2>
+                            {/* шапка */}
+                            <div className={style.headerUsers}>
+                                <h2>Пользователи</h2>
+                                <div className={style.serviceSearchAndAdd}>
+                                    <div className={style.searchUsers}>
+                                        <img src={require('./image/icons/search.png')} />
+                                        <input
+                                            type="text"
+                                            placeholder="Поиск"
+                                            value={serviceSearchTerm}
+                                            onChange={handleServiceSearchChange}
+                                            className={style.searchInput}
+                                        />
+                                    </div>
+                                    <button onClick={handleAddService} className={style.addServiceButton}>
+                                        <img src={require('./image/icons/plus.png')} />
+                                        Добавить услугу
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Список услуг */}
+                            <div className={style.serviceList}>
+                                {currentServices.map((service, index) => (
+                                    <div key={service.id} className={style.serviceItem}>
+                                        <div className={style.serviceInfo}>
+                                            {/* Индекс пользователя */}
+                                            <div className={style.userIndexBackgroung}>
+                                                <span className={style.serviceIndex}>
+                                                    {index + 1}
+                                                </span>
+                                            </div>
+                                            <span className={style.serviceTitle}>{service.title}</span>
+                                        </div>
+                                        <div className={style.serviceActions}>
+                                            <button onClick={() => handleEditService(service.id)} className={style.editServiceButton}>
+                                                <img src={require('./image/icons/editWhite.png')} />
+                                            </button>
+                                            <button onClick={() => handleDeleteService(service.id)} className={style.deleteUserButton}>
+                                                <img src={require('./image/icons/trash.png')} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+
+                                <div className={style.pagination}>
+                                    <button onClick={() => handleServicePageChange(currentServicePage - 1)} disabled={currentServicePage === 1}>&lt;</button>
+                                    <span> {currentServicePage} из {totalServicePages}</span>
+                                    <button onClick={() => handleServicePageChange(currentServicePage + 1)} disabled={currentServicePage === totalServicePages}>&gt;</button>
+                                </div>
+                            </div>
                         </div>
                     )}
 
                     {activeTab === 'tests' && (
                         <div>
-                            <h2>Список тестов</h2>
+                            {/* шапка */}
+                            <div className={style.headerUsers}>
+                                <h2>Список тестов</h2>
+                                <div className={style.serviceSearchAndAdd}>
+                                    <div className={style.searchUsers}>
+                                        <img src={require('./image/icons/search.png')} />
+                                        <input
+                                            type="text"
+                                            placeholder="Поиск"
+                                            value={serviceSearchTerm}
+                                            onChange={handleServiceSearchChange}
+                                            className={style.searchInput}
+                                        />
+                                    </div>
+                                    <button onClick={handleAddService} className={style.addServiceButton}>
+                                        <img src={require('./image/icons/plus.png')} />
+                                        Добавить тест
+                                    </button>
+                                </div>
+                            </div>
+                            <div className={style.testsList}>
+                                <div className={style.oneTest}>
+                                    <div className={style.infoTest}>
+                                        {/* Индекс теста */}
+                                        <div className={style.userIndexBackgroung}>
+                                            <span className={style.serviceIndex}>
+                                                1
+                                            </span>
+                                        </div>
+                                        <div className={style.serviceTitle}>Test 1</div>
+                                    </div>
+                                    <div className={style.serviceActions}>
+                                        <button className={style.editServiceButton}>
+                                            <img src={require('./image/icons/editWhite.png')} />
+                                        </button>
+                                        <button className={style.deleteUserButton}>
+                                            <img src={require('./image/icons/trash.png')} />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className={style.oneTest}>
+                                    <div className={style.infoTest}>
+                                        {/* Индекс теста */}
+                                        <div className={style.userIndexBackgroung}>
+                                            <span className={style.serviceIndex}>
+                                                2
+                                            </span>
+                                        </div>
+                                        <div className={style.serviceTitle}>Test 2</div>
+                                    </div>
+                                    <div className={style.serviceActions}>
+                                        <button className={style.editServiceButton}>
+                                            <img src={require('./image/icons/editWhite.png')} />
+                                        </button>
+                                        <button className={style.deleteUserButton}>
+                                            <img src={require('./image/icons/trash.png')} />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className={style.oneTest}>
+                                    <div className={style.infoTest}>
+                                        {/* Индекс теста */}
+                                        <div className={style.userIndexBackgroung}>
+                                            <span className={style.serviceIndex}>
+                                                3
+                                            </span>
+                                        </div>
+                                        <div className={style.serviceTitle}>Test 3</div>
+                                    </div>
+                                    <div className={style.serviceActions}>
+                                        <button className={style.editServiceButton}>
+                                            <img src={require('./image/icons/editWhite.png')} />
+                                        </button>
+                                        <button className={style.deleteUserButton}>
+                                            <img src={require('./image/icons/trash.png')} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     )}
 
                     {activeTab === 'reviews' && (
                         <div>
                             <h2>Отзывы</h2>
+                            <p>Здесь будут отзывы пользователей</p>
                         </div>
                     )}
                 </div>
@@ -649,8 +868,23 @@ const AdminPage = () => {
                     </div>
                 </div>
             )}
+
+            {showDeleteModal && (
+                <div className={style.modalOverlay}>
+                    <div className={style.modalContent}>
+                        <h3>Вы уверены, что хотите удалить эту услугу?</h3>
+                        <div className={style.modalActions}>
+                            <button onClick={confirmDeleteService} className={style.deleteServiceButton}>Удалить</button>
+                            <button onClick={closeDeleteModal}>Отмена</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
+
+
 };
 
 export default AdminPage;

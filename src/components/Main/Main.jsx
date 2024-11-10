@@ -4,10 +4,8 @@ import style from "./Main.module.css";
 import { Link } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { CSSTransition } from 'react-transition-group';
-import reviewsData from '../../ReviewsData'; // Импортируем данные с отзывами
 import { Element } from 'react-scroll';
 
-// Херня для слайдер
 const TestCard = ({ title, description, background }) => {
   return (
     <div className={style.testCard} style={{ background }}>
@@ -16,9 +14,177 @@ const TestCard = ({ title, description, background }) => {
       <button className={style.goButton}>Перейти</button>
     </div>
   );
-}; 
+};
 
-const Slider = () => {
+const ArticleCard = ({ id, title, description, background, onFavoriteToggle }) => {
+  const favoriteArticles = JSON.parse(localStorage.getItem('favoriteArticles')) || [];
+
+  // Проверяем, есть ли статья в избранном пользователя
+  const [favorite, setFavorite] = useState(favoriteArticles.includes(id));
+
+  const handleFavoriteClick = async () => {
+    const newFavoriteState = !favorite;
+    setFavorite(newFavoriteState);
+
+    // Получаем список избранных из localStorage (или пустой массив по умолчанию)
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    // Обновляем список избранных в localStorage
+    if (newFavoriteState) {
+      // Добавляем статью в избранное
+      localStorage.setItem('favoriteArticles', JSON.stringify([...favoriteArticles, id]));
+    } else {
+      // Удаляем статью из избранного
+      localStorage.setItem('favoriteArticles', JSON.stringify(favoriteArticles.filter((articleId) => articleId !== id)));
+    }
+
+    // Обновляем избранное на сервере, если пользователь авторизован
+    if (user) {
+      try {
+        const response = await fetch('http://localhost:8080/api/favorites', {
+          method: newFavoriteState ? 'POST' : 'DELETE', // POST для добавления, DELETE для удаления
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            article_id: id,      // Идентификатор статьи
+            user_id: user.id,    // Идентификатор пользователя
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Ошибка при обновлении избранного');
+        }
+
+        console.log(newFavoriteState ? 'Статья добавлена в избранное' : 'Статья удалена из избранного');
+      } catch (error) {
+        console.error('Ошибка при добавлении/удалении из избранного:', error);
+      }
+    }
+
+
+  };
+
+  return (
+    <div className={style.testCard} style={{ background }}>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <div className={style.optionArticles}>
+        <button className={style.goButton}>Перейти</button>
+
+        <div className={style.favoriteIcon} onClick={handleFavoriteClick}>
+          {favorite ? (
+            <span className={style.filledHeart}>❤️</span> // Закрашенное сердечко
+          ) : (
+            <span className={style.emptyHeart}>🤍</span> // Пустое сердечко
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+const SliderArticles = () => {
+  const [articles, setArticles] = useState([]); // Установим пустой массив по умолчанию
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    // Загрузка статей из базы данных
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/articles/all');
+        const data = await response.json();
+        setArticles(data || []);
+      } catch (error) {
+        console.error("Ошибка при загрузке статей:", error);
+        setArticles([]); // Установим пустой массив при ошибке
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  const handleFavoriteToggle = async (articleId) => {
+    const user = JSON.parse(localStorage.getItem('user')); // Предположим, что в localStorage хранится объект пользователя
+    if (!user || !user.id) {
+      console.error('Пользователь не авторизован');
+      return;
+    }
+
+    try {
+      console.log('Article ID:', articleId);
+      const response = await fetch('http://localhost:8080/api/favorites/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user.id, // передаем user_id из localStorage
+          article_id: articleId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Ошибка при добавлении в избранное');
+      }
+
+      console.log('Статья добавлена в избранное');
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const totalSlides = Math.ceil(articles.length / 3);
+
+  const nextSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide - 1 + totalSlides) % totalSlides);
+  };
+
+  const startIndex = currentSlide * 3;
+  const currentArticles = articles.slice(startIndex, startIndex + 3);
+
+  return (
+    <div className={style.sliderContainer}>
+      <div className={style.slides}>
+        {currentArticles.map((article, index) => (
+          <div key={index} className={style.slide}>
+            <ArticleCard
+              id={article.id}
+              title={article.title}
+              description={article.description}
+              background="linear-gradient(45deg, #feecf1, #fff7f3)"
+              onFavoriteToggle={handleFavoriteToggle}
+              isFavorite={false} // Замените на актуальное свойство избранного
+            />
+          </div>
+        ))}
+      </div>
+      {/* Переключатель */}
+      <div className={style.sliderControls}>
+        <button className={style.arrowButton} onClick={prevSlide}>
+          <svg width="103" height="12" viewBox="0 0 103 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M102 7C102.552 7 103 6.55228 103 6C103 5.44772 102.552 5 102 5V7ZM0 6L10 11.7735V0.226497L0 6ZM102 5L9 5V7L102 7V5Z" fill="#545778" />
+          </svg>
+        </button>
+        <div className={style.slideNumber}>
+          {currentSlide + 1} / {totalSlides}
+        </div>
+        <button className={style.arrowButton} onClick={nextSlide}>
+          <svg width="109" height="12" viewBox="0 0 109 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 5C0.447715 5 -4.82823e-08 5.44772 0 6C4.82823e-08 6.55228 0.447715 7 1 7L1 5ZM109 5.99999L99 0.226489L99 11.7735L109 5.99999ZM1 7L100 6.99999L100 4.99999L1 5L1 7Z" fill="#545778" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const SliderTests = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const testCards = [
@@ -96,6 +262,8 @@ const Slider = () => {
   );
 };
 
+
+
 // Компонент для отображения звездочек
 const StarRating = ({ rating }) => {
   const maxStars = 5;
@@ -142,7 +310,7 @@ const ReviewCard = ({ review, background }) => {
       </button>
       <div className={style.infoUserForRev}>
         <div className={style.avatarUser}>
-          <img src={avatar} />
+          <img src={avatar || require('./image/defaultAvatar.png')} />
         </div>
         <p className={style.nameUserForRevi}>{name}</p>
       </div>
@@ -269,7 +437,7 @@ const Main = () => {
     {
       question: 'Что такое интегральное нейропрограммирование?',
       answer: (<span>
-        Интегральное нейропрограммирование (ИНП) представляет собой современное (т.е. созданное уже в ХХ1 веке) направление практической психологии и психологически ориентированной психотерапии, получившее, несмотря на краткий срок своего существования очень широкое распространение как в России, так и в ближнем и дальнем зарубежье.
+        Интегральное нейропрограммирование (ИНП) представляет собой современное (т.е. созданное уже в ХХI веке) направление практической психологии и психологически ориентированной психотерапии, получившее, несмотря на краткий срок своего существования очень широкое распространение как в России, так и в ближнем и дальнем зарубежье.
         <br />
         <br />
         Подробнее: <a className={style.answerLink} href="https://psy-in.ru/articles/vmesto-vvedeniya-ili-ochen-korotko-ob-integralnom-nejroprogrammirovanii-inp?ysclid=lrrp773125293140394 " target="_blank" rel="noopener noreferrer">https://psy-in.ru/articles/vmesto-vvedeniya-ili-ochen-korotko-ob-integralnom-nejroprogrammirovanii-inp?ysclid=lrrp773125293140394 </a>.
@@ -285,7 +453,28 @@ const Main = () => {
     },
   ];
 
-  const [reviews] = useState(reviewsData); // Используем данные из ReviewsData.js
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    // Подгружаем отзывы из API
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/AllReviews');
+        const data = await response.json();
+
+        if (response.ok) {
+          // Отображаем только первые три отзыва
+          setReviews(data.slice(0, 3));
+        } else {
+          console.error('Ошибка при загрузке отзывов:', data.message);
+        }
+      } catch (error) {
+        console.error('Ошибка запроса:', error);
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   const backgroundGradients = [
     'linear-gradient(45deg, #feecf1 0%, #fff7f3 100%)',
@@ -312,7 +501,7 @@ const Main = () => {
   const formatCost = (cost) => {
     const parsedCost = parseFloat(cost);
     return parsedCost % 1 === 0 ? `${parsedCost} ₽` : `${parsedCost.toFixed(2)} ₽`;
-  }; 
+  };
 
   return (
     <main className={style.main}>
@@ -428,14 +617,14 @@ const Main = () => {
         </div>
       </div>
 
+      {/* Отзывы */}
       <Element name="reviews">
-        {/* Отзывы */}
         <div className={style.testimonials}>
           <h3>Отзывы</h3>
           <div className={style.reviewContainer}>
             {reviews.map((review, index) => (
               <ReviewCard
-                key={index}
+                key={review.id}
                 review={review}
                 background={backgroundGradients[index % backgroundGradients.length]}
               />
@@ -460,13 +649,25 @@ const Main = () => {
         </div>
       </Element>
 
+      {/* Для самопознания */}
       <Element name="selfDevelopment">
-        {/* Для самопознания */}
         <div className={style.selfDiscovery}>
           <h3>Для самопознания</h3>
           <div className={style.conteinerSelfDiscovery}>
             <div className={style.sliderContainer}>
-              <Slider />
+              <SliderTests />
+            </div>
+          </div>
+        </div>
+      </Element>
+
+      {/* Интересные статьи */}
+      <Element>
+        <div className={style.selfDiscovery}>
+          <h3>Интересные статьи</h3>
+          <div className={style.conteinerSelfDiscovery}>
+            <div className={style.sliderContainer}>
+              <SliderArticles />
             </div>
           </div>
         </div>
@@ -493,10 +694,7 @@ const Main = () => {
           </div>
         </div>
       </Element>
-
-
     </main>
-
   );
 }
 

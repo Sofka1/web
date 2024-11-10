@@ -23,7 +23,7 @@ const Services = () => {
         console.error('Error fetching services:', error);
       }
     };
-
+ 
     loadServices();
   }, []);
 

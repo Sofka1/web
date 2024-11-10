@@ -61,10 +61,11 @@ const Header = () => {
 
   // Функция выхода
   const handleLogout = () => {
-    localStorage.removeItem('user'); // Очищаем данные пользователя из localStorage
+    localStorage.removeItem('user');
     setUser(null);
-    setIsAdmin(false); // Сбрасываем состояние isAdmin
-    navigate('/login'); // Перенаправляем на страницу авторизации
+    setIsAdmin(false);
+    navigate('/login');
+    window.location.reload(); // Перезагружает страницу, чтобы обновить интерфейс
   };
 
   return (

@@ -77,8 +77,11 @@ const UserPage = () => {
 
     // Функция для выхода пользователя
     const handleLogout = () => {
-        localStorage.removeItem('user'); // Удаляем данные пользователя из localStorage
-        navigate('/main'); // Перенаправляем на страницу авторизации
+        localStorage.removeItem('user');
+        setUser(null);
+        // setIsAdmin(false);
+        navigate('/main');
+        window.location.reload(); // Перезагружает страницу, чтобы обновить интерфейс
     };
 
     // Функция для удаления аккаунта
@@ -479,7 +482,7 @@ const UserPage = () => {
                                 {pastServices.length > 0 ? (
                                     <div className={style.serviceList}>
                                         {pastServices.map(service => (
-                                            <div className={style.serviceCard}> 
+                                            <div className={style.serviceCard}>
                                                 <div key={service.booking_id}>
                                                     {/* Отображение данных услуги */}
                                                     <h3>{service.service_title}</h3>

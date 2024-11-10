@@ -407,7 +407,6 @@
 .myBenefitsInfo {
     font-weight: 400;
     font-size: 18px;
-    font-variant: small-caps;
     text-align: justify;
     color: #545778;
 }
@@ -455,6 +454,7 @@
 }
 
 .reviewCard {
+    max-width: 380px;
     z-index: 200;
     flex: 1;
     border-radius: 5px;
@@ -475,7 +475,7 @@
     color: #545778;
 
     display: -webkit-box;
-    -webkit-line-clamp: 10;
+    -webkit-line-clamp: 5;
     /* Показывает только 10 строк */
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -849,10 +849,28 @@
     color: #fff;
 }
 
+/* Статьи */
+.optionArticles{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.favoriteIcon {
+    font-size: 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.filledHeart {
+    color: red;
+}
+
+.emptyHeart {
+    color: rgba(128, 128, 128, 0.479);
+}
 
 
-
-/* АДАПТИВ БЛЯ ЕБАННЫЙ */
 @media(max-width:768px) {
     .conteiner {
         margin: 20px auto 0;
@@ -938,5 +956,60 @@
 
     .cardTitle p {
         font-size: 18px;
+    }
+
+
+    /* myBenefits */
+    .myBenefits {
+        margin: 60px auto;
+        max-width: 680px;
+    }
+
+    .myBenefitsInfo {
+        font-size: 15px;
+    }
+
+    .myBenefitsContents img {
+        width: 223px;
+        margin-left: 60px;
+    }
+
+
+    /* Отзывы */
+    .testimonials {
+        margin: 0 auto 120px auto;
+        max-width: 680px;
+    }
+
+    .reviewContainer {
+        flex-wrap: wrap;
+    }
+
+    .reviewCard {
+        max-width: 224px;
+        min-width: 224px;
+        padding: 30px 40px;
+        margin-bottom: 15px;
+    }
+
+    /* faqBlock */
+    .faqBlock {
+        max-width: 680px;
+    }
+
+    /* Для самопознания */
+    .selfDiscovery {
+        max-width: 680px;
+    }
+
+    /* haveQuesion */
+    .haveQuesion {
+        max-width: 680px;
+    }
+
+    .haveQuesionLinks {
+        max-width: 680px;
+        flex-direction: column;
+        gap: 20px;
     }
 }

@@ -50,10 +50,10 @@ const Registration = () => {
             );
     };
 
-    // const validatePassword = (password) => {
-    //     var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    //     return re.test(password);
-    // }
+    const validatePassword = (password) => {
+        var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        return re.test(password);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();  // предотвращаем перезагрузку страницы
@@ -80,10 +80,10 @@ const Registration = () => {
             showMessage("Пароль должен быть не менее 6 символов.");
             return;
         }
-        // if(!validatePassword(formData.password)){
-        //     showMessage("Слишком легкий пароль");
-        //     return;
-        // }
+        if(!validatePassword(formData.password)){
+            showMessage("Слишком легкий пароль");
+            return;
+        }
         if (formData.password !== formData.confirmPassword) {
             showMessage("Пароли не совпадают.");
             return;

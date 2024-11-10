@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom"; // Исправлено
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import style from './App.css';
 
 import Header from './components/Header/Header';
@@ -11,7 +11,7 @@ import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import BookingPage from './components/BookingPage/BookingPage';
 import UserPage from './components/UserPage/UserPage';
-import AdminPage from './components/AdminPage/AdminPage';
+import AdminPage from './components/AdminPage/AdminPage'; 
 
 const App = () => {
 

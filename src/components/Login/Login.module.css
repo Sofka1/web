@@ -2,6 +2,7 @@
 
 .container {
     max-width: 1200px;
+    min-height: 430px;
     margin: 30px auto;
     padding: 0;
     display: flex;

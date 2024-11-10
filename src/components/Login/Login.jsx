@@ -11,7 +11,7 @@ import img2 from '../imageForRegAndAuth/2.png';
 // import img6 from '../imageForRegAndAuth/6.png';
 
 const Login = () => {
-    const [formData, setFormData] = useState({ 
+    const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
@@ -54,9 +54,20 @@ const Login = () => {
                     role: data.user.role
                 }));
 
+                // Загружаем избранные статьи пользователя (если есть API для получения избранных)
+                try {
+                    const response = await fetch(`http://localhost:8080/api/favorites?user_id=${data.user.id}`);
+                    const favoriteArticles = await response.json();
+                    const favoriteArticleIds = favoriteArticles.map((article) => article.article_id);
+
+                    // Сохраняем избранные статьи в localStorage
+                    localStorage.setItem('favoriteArticles', JSON.stringify(favoriteArticleIds));
+                } catch (error) {
+                    console.error("Ошибка при загрузке избранных статей", error);
+                }
+
                 // Очищаем ошибки
                 setErrorMessage('');
-
                 window.dispatchEvent(new Event("storage")); // Это событие вызовет обновление в других компонентах, использующих данные из localStorage
 
                 // Перенаправляем на главную страницу

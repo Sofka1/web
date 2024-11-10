@@ -1,11 +1,11 @@
-.footer{
+.footer {
     margin: auto;
     max-width: 100%;
     padding: 40px 0 20px 0;
     background-color: #545778;
 }
 
-.footerHeader{
+.footerHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -13,21 +13,21 @@
     margin-bottom: 40px;
 }
 
-.footerLine{
+.footerLine {
     width: 100%;
     height: 2px;
     background-color: #fff;
     border-radius: 2px;
 }
 
-.footerLogo{
+.footerLogo {
     width: 150px;
     margin: 0 40px;
 }
 
 
 
-.footerContent{
+.footerContent {
     max-width: 1200px;
     margin: auto;
 
@@ -36,17 +36,17 @@
     justify-content: space-between;
 }
 
-.formFooter{
+.formFooter {
     display: flex;
     align-items: center;
-    justify-content: space-between; 
+    justify-content: space-between;
 }
 
-.formFooterInfo{
+.formFooterInfo {
     max-width: 300px;
 }
 
-.formFooterInfo h4{
+.formFooterInfo h4 {
     font-weight: 400;
     font-size: 16px;
     color: #fff;
@@ -54,13 +54,13 @@
     margin-bottom: 5px;
 }
 
-.formFooterInfo p{
+.formFooterInfo p {
     font-weight: 400;
     font-size: 9px;
     color: #b1b1b1;
 }
 
-.formLink{
+.formLink {
     cursor: pointer;
     text-decoration: none;
 
@@ -78,9 +78,9 @@
     align-items: center;
     margin-top: 20px;
     margin-left: 30px;
-  }
-  
-  .input {
+}
+
+.input {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #fff;
@@ -88,15 +88,16 @@
     width: 232px;
     background-color: #545778;
     color: #fff;
-  }
+}
 
-  /* Стили для placeholder */
+/* Стили для placeholder */
 .input::placeholder {
-    color: #fff; /* Измените цвет на желаемый */
-  }
-  
-  
-  .button {
+    color: #fff;
+    /* Измените цвет на желаемый */
+}
+
+
+.button {
     border-radius: 40px;
     padding: 10px 20px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
@@ -108,18 +109,17 @@
     font-size: 13px;
     line-height: 125%;
     color: #545778;
-  }
-  
-  .button:hover {
+}
+
+.button:hover {
     background-color: #f0055c;
     color: #fff;
-  }
-  
-  .message {
+}
+
+.message {
     margin-top: 10px;
     color: green;
-  }
-  
+}
 
 
 
@@ -128,11 +128,12 @@
 
 
 
-.footerLinks{
+
+.footerLinks {
     margin-top: 55px;
 }
 
-.contentLinks{
+.contentLinks {
     padding: 25px 0 0px 0;
     max-width: 1200px;
     margin: auto;
@@ -141,13 +142,13 @@
     justify-content: space-between;
 }
 
-.contentLinks p{
+.contentLinks p {
     font-weight: 400;
     font-size: 10px;
     color: #fff;
 }
 
-.dockLink{
+.dockLink {
     font-weight: 400;
     font-size: 10px;
     text-decoration: underline;
@@ -157,18 +158,18 @@
     margin-left: 70px;
 }
 
-.formStyle{
+.formStyle {
     display: flex;
     flex-direction: column;
 }
 
 
 /* менюшка сбоку */
-.menuFooter{
+.menuFooter {
     width: 450px;
 }
 
-.menuFooter ul{
+.menuFooter ul {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
@@ -176,7 +177,7 @@
     justify-content: right;
 }
 
-.menuFooter li{
+.menuFooter li {
     list-style-type: none;
 
     border: 1px solid #fff;
@@ -186,7 +187,7 @@
     margin: 0 10px 10px 0;
 }
 
-.menuFooter li a{
+.menuFooter li a {
     cursor: pointer;
 
     text-decoration: none;
@@ -195,4 +196,60 @@
     line-height: 140%;
     text-align: right;
     color: #fff;
+}
+
+
+@media(max-width:768px) {
+    .footer {
+        max-width: 768px;
+        padding: 20px 0;
+    }
+
+    .footerHeader {
+        margin-bottom: 30px;
+    }
+
+    .footerLogo {
+        width: 150px;
+        margin: 0 56px;
+    }
+
+    .footerContent {
+        max-width: 768px;
+        justify-content: center;
+        gap: 80px;
+    }
+
+    .formFooter {
+        flex-direction: column;
+        justify-content: left;
+        margin-left: 20px;
+    }
+
+    .formFooterInfo {
+        max-width: 260px;
+    }
+    
+    .formFooterInfo h4 {
+        font-size: 14px;
+    }
+
+    .containerForm {
+        margin-left: 0;
+    }
+
+    /* менюшка сбоку */
+    .menuFooter {
+        width: 350px;
+    }
+
+    .menuFooter li {
+        padding: 5px 10px;
+    
+        margin: 0 10px 10px 0;
+    }
+
+    .menuFooter li a {
+        font-size: 12px;
+    }
 }

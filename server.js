@@ -9,6 +9,8 @@ const servicesRoutes = require('./routes/services.routes');
 const bookingRoutes = require('./routes/booking.routes');
 const scheduleRoutes = require('./routes/schedule.routes');
 const reviewsRouter = require('./routes/reviews.router');
+const articlesRouter = require('./routes/articles.routes');
+const favoriteRouter = require('./routes/favorites.routes'); 
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -29,6 +31,8 @@ app.use('/api', servicesRoutes);
 app.use('/api', bookingRoutes);
 app.use('/api', scheduleRoutes);
 app.use('/api', reviewsRouter);
+app.use('/api', articlesRouter);
+app.use('/api', favoriteRouter);
 
 // Если ты находишься в production, то сервер будет отдавать файлы React-приложения
 if (process.env.NODE_ENV === 'production') {
