@@ -5,7 +5,7 @@
     padding: 0;
 }
 
-.conteiner {
+.conteiner { 
     margin: 60px auto 0;
     max-width: 1200px;
     display: flex;
@@ -16,7 +16,7 @@
 .voln {
     width: 2000px;
     /* margin: auto; */
-}
+} 
 
 .voln img {
     margin: auto;
@@ -105,7 +105,6 @@
 
     font-weight: 500;
     font-size: 20px;
-    font-variant: small-caps;
     color: #545778;
 
     transition: color 0.5s;
@@ -298,6 +297,7 @@
 .enroll {
     z-index: 200;
     border: 1px solid #545778;
+    color: #545778;
     border-radius: 40px;
     padding: 3px 25px 5px 25px;
     width: 151px;
@@ -624,14 +624,14 @@
 
 /* Для самопознания */
 
-.selfDiscovery {
+.selfDiscovery, .selfDiscoveryMini {
     max-width: 1200px;
     position: relative;
     z-index: 200;
     margin: 0 auto 120px auto;
 }
 
-.selfDiscovery h3 {
+.selfDiscovery h3, .selfDiscoveryMini h3 {
     z-index: 200;
     font-family: 'Lighthaus';
     font-weight: 400;
@@ -657,7 +657,7 @@
     padding: 0 10px;
 }
 
-.sliderContainer .testCard {
+.sliderContainer .testCard { 
     padding: 20px 30px;
     border-radius: 10px;
     box-shadow: 0 4px 4px 0 rgba(250, 130, 112, 0.2);
@@ -672,6 +672,15 @@
 
     margin-bottom: 15px;
 }
+
+.articlesTitle {
+    text-decoration: none;
+    font-family: 'Lighthaus';
+    font-weight: 400;
+    font-size: 20px;
+    color: #545778;
+}
+
 
 .sliderContainer .testCard p {
     font-weight: 400;
@@ -725,6 +734,9 @@
     color: #545778;
 }
 
+.selfDiscoveryMini{
+    display: none;
+}
 
 
 /* haveQuesion */
@@ -851,9 +863,15 @@
 
 /* Статьи */
 .optionArticles{
+    margin-top: 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    text-decoration: none;
+}
+
+.optionArticles a{
+    text-decoration: none;
 }
 
 .favoriteIcon {
@@ -1009,6 +1027,244 @@
 
     .haveQuesionLinks {
         max-width: 680px;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+
+@media(max-width:320px){
+    .conteiner {
+        margin: 20px auto 0;
+        max-width: 320px;
+    }
+
+    .information {
+        max-width: 290px;
+        margin: auto;
+    }
+
+    .decoration img {
+        display: none;
+    }
+
+    .title {
+        margin-bottom: 15px;
+    }
+
+    .title h1 {
+        font-size: 32px;
+    }
+
+    .title h2 {
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .information .enroll {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+
+
+    /* aboutMe */
+    .aboutMe {
+        margin-top: 80px;
+        max-width: 290px;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .aboutMe img {
+        max-width: 190px;
+        margin: 0 0px 30px 0;
+    }
+
+    .decorAboutMe {
+        height: 1px;
+    }
+
+    .titleAboutMe {
+        margin-bottom: 15px;
+    }
+
+    .titleAboutMe h2 {
+        font-size: 20px;
+        margin-right: 15px;
+    }
+
+    .aboutMeInformation p {
+        font-weight: 400;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+
+    /* Услуги */
+    .inquiries {
+        margin: 80px auto;
+        max-width: 320px;
+    }
+
+    .inquiriesTitle {
+        margin-bottom: 15px;
+    }
+
+    .inquiriesTitle h3{
+        font-size: 20px;
+    }
+
+    .serviceCards {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .card1 {
+        width: 270px;
+        /* margin: auto; */
+    }
+
+    .cardTitle p {
+        font-size: 16px;
+    }
+
+    .infoTitle {
+        font-size: 14px;
+    }
+
+    .infoValue {
+        font-weight: 400;
+        font-size: 14px;
+    }
+
+    .linkCard {
+        font-size: 13px;
+    }
+
+    .enroll {
+        padding: 5px 20px;
+        width: auto;
+        height: auto;
+        font-size: 12px;
+    }
+
+    .goCatalog {
+        margin-top: 15px;
+    }
+    
+    .goCatalog button {
+        padding: 5px 20px;
+        width: auto;
+        height: auto;
+    
+        font-size: 14px;
+    }
+
+    /* myBenefits */
+    .myBenefits {
+        margin: 80px auto;
+        max-width: 290px;
+    }
+
+    .myBenefitsTitle {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .myBenefitsContents{
+        display: flex;
+        flex-direction:column-reverse;
+    }
+
+    .myBenefitsInfo {
+        font-size: 14px;
+    }
+
+    .myBenefitsContents img {
+        margin: auto;
+        width: 180px;
+        margin-bottom: 20px;
+    }
+
+
+    /* Отзывы */
+    .testimonials {
+        margin: 0 auto 120px auto;
+        max-width: 680px;
+    }
+
+    .reviewContainer {
+        flex-wrap: wrap;
+    }
+
+    .reviewCard {
+        max-width: 224px;
+        min-width: 224px;
+        padding: 30px 40px;
+        margin-bottom: 15px;
+    }
+
+    /* faqBlock */
+    .faqBlock {
+        max-width: 320px;
+    }
+
+    .faqBlock h3 {
+        font-size: 20px;
+    
+        margin-bottom: 15px;
+    }
+
+    .containerFAQ {
+        max-width: 290px;
+        gap: 20px;
+    }
+
+    .faqItem {
+        max-width: 290px;
+        padding: 20px;
+    }
+
+    .faqQuestion p {
+        font-variant: normal;
+        font-size: 13px;
+    }
+
+    .expandButton {
+        padding: 6px 5px 0px 5px;
+    }
+
+    /* Для самопознания */
+    .selfDiscovery {
+        display: none;
+    }
+
+    .selfDiscoveryMini{
+        display:block;
+    }
+
+    .selfDiscovery h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .sliderContainer .arrowButton {
+        padding: 0 5px;
+    }
+
+    .sliderContainer .slideNumber {
+        margin: 0 10px 0px 10px;
+        font-size: 14x;
+    }
+
+    /* haveQuesion */
+    .haveQuesion {
+        max-width: 290px;
+    }
+
+    .haveQuesionLinks {
+        max-width: 290px;
         flex-direction: column;
         gap: 20px;
     }

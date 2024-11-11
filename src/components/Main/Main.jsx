@@ -14,7 +14,7 @@ const TestCard = ({ title, description, background }) => {
       <button className={style.goButton}>Перейти</button>
     </div>
   );
-};
+}; 
 
 const ArticleCard = ({ id, title, description, background, onFavoriteToggle }) => {
   const favoriteArticles = JSON.parse(localStorage.getItem('favoriteArticles')) || [];
@@ -67,10 +67,9 @@ const ArticleCard = ({ id, title, description, background, onFavoriteToggle }) =
 
   return (
     <div className={style.testCard} style={{ background }}>
-      <h2>{title}</h2>
-      <p>{description}</p>
+      <h4 className={style.articlesTitle}>{title}</h4>
       <div className={style.optionArticles}>
-        <button className={style.goButton}>Перейти</button>
+        <Link className={style.goButton} to={`/articles/${id}`}>Перейти</Link>
 
         <div className={style.favoriteIcon} onClick={handleFavoriteClick}>
           {favorite ? (
@@ -184,6 +183,102 @@ const SliderArticles = () => {
   );
 };
 
+const SliderArticlesMini = () => {
+  const [articles, setArticles] = useState([]); // Установим пустой массив по умолчанию
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    // Загрузка статей из базы данных
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/articles/all');
+        const data = await response.json();
+        setArticles(data || []);
+      } catch (error) {
+        console.error("Ошибка при загрузке статей:", error);
+        setArticles([]); // Установим пустой массив при ошибке
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  const handleFavoriteToggle = async (articleId) => {
+    const user = JSON.parse(localStorage.getItem('user')); // Предположим, что в localStorage хранится объект пользователя
+    if (!user || !user.id) {
+      console.error('Пользователь не авторизован');
+      return;
+    }
+
+    try {
+      console.log('Article ID:', articleId);
+      const response = await fetch('http://localhost:8080/api/favorites/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user.id, // передаем user_id из localStorage
+          article_id: articleId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Ошибка при добавлении в избранное');
+      }
+
+      console.log('Статья добавлена в избранное');
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const totalSlides = articles.length;
+
+  const nextSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide - 1 + totalSlides) % totalSlides);
+  };
+
+  return (
+    <div className={style.sliderContainer}>
+      {articles.length > 0 ? (
+        <div className={style.slides}>
+          <ArticleCard
+            id={articles[currentSlide].id}
+            title={articles[currentSlide].title}
+            description={articles[currentSlide].description}
+            background="linear-gradient(45deg, #feecf1, #fff7f3)"
+            onFavoriteToggle={() => handleFavoriteToggle(articles[currentSlide].id)}
+            isFavorite={false} // Здесь замените на актуальное значение избранного
+          />
+        </div>
+      ) : (
+        <p>Загрузка статей...</p> // Показать сообщение, пока данные не загружены
+      )}
+      {/* Переключатель */}
+      <div className={style.sliderControls}>
+        <button className={style.arrowButton} onClick={prevSlide}>
+          <svg width="103" height="12" viewBox="0 0 103 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M102 7C102.552 7 103 6.55228 103 6C103 5.44772 102.552 5 102 5V7ZM0 6L10 11.7735V0.226497L0 6ZM102 5L9 5V7L102 7V5Z" fill="#545778" />
+          </svg>
+        </button>
+        <div className={style.slideNumber}>
+          {currentSlide + 1} / {totalSlides}
+        </div>
+        <button className={style.arrowButton} onClick={nextSlide}>
+          <svg width="109" height="12" viewBox="0 0 109 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 5C0.447715 5 -4.82823e-08 5.44772 0 6C4.82823e-08 6.55228 0.447715 7 1 7L1 5ZM109 5.99999L99 0.226489L99 11.7735L109 5.99999ZM1 7L100 6.99999L100 4.99999L1 5L1 7Z" fill="#545778" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const SliderTests = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -262,6 +357,80 @@ const SliderTests = () => {
   );
 };
 
+const SliderTestsMini = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const testCards = [
+    {
+      title: 'Тест 1',
+      description: 'Описание теста 1',
+      background: 'linear-gradient(45deg, #feecf1 0%, #fff7f3 100%)',
+    },
+    {
+      title: 'Тест 2',
+      description: 'Описание теста 2',
+      background: 'linear-gradient(90deg, #fbfefe 0%, #fcfefe 100%)',
+    },
+    {
+      title: 'Тест 3',
+      description: 'Описание теста 3',
+      background: 'linear-gradient(135deg, #fffef4 0%, #fff2f0 100%)',
+    },
+    {
+      title: 'Тест 4',
+      description: 'Описание теста 4',
+      background: 'linear-gradient(45deg, #feecf1 0%, #fff7f3 100%)',
+    },
+    {
+      title: 'Тест 5',
+      description: 'Описание теста 5',
+      background: 'linear-gradient(90deg, #fbfefe 0%, #fcfefe 100%)',
+    },
+    {
+      title: 'Тест 6',
+      description: 'Описание теста 6',
+      background: 'linear-gradient(135deg, #fffef4 0%, #fff2f0 100%)',
+    },
+  ];
+
+  const totalSlides = testCards.length;
+
+  const nextSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prevSlide) => (prevSlide - 1 + totalSlides) % totalSlides);
+  };
+
+  return (
+    <div className={style.sliderContainer}>
+      <div className={style.slides}>
+        <TestCard
+          title={testCards[currentSlide].title}
+          description={testCards[currentSlide].description}
+          background={testCards[currentSlide].background}
+        />
+      </div>
+      {/* Переключатель */}
+      <div className={style.sliderControls}>
+        <button className={style.arrowButton} onClick={prevSlide}>
+          <svg width="103" height="12" viewBox="0 0 103 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M102 7C102.552 7 103 6.55228 103 6C103 5.44772 102.552 5 102 5V7ZM0 6L10 11.7735V0.226497L0 6ZM102 5L9 5V7L102 7V5Z" fill="#545778" />
+          </svg>
+        </button>
+        <div className={style.slideNumber}>
+          {currentSlide + 1} / {totalSlides}
+        </div>
+        <button className={style.arrowButton} onClick={nextSlide}>
+          <svg width="109" height="12" viewBox="0 0 109 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 5C0.447715 5 -4.82823e-08 5.44772 0 6C4.82823e-08 6.55228 0.447715 7 1 7L1 5ZM109 5.99999L99 0.226489L99 11.7735L109 5.99999ZM1 7L100 6.99999L100 4.99999L1 5L1 7Z" fill="#545778" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
 
 
 // Компонент для отображения звездочек
@@ -661,6 +830,18 @@ const Main = () => {
         </div>
       </Element>
 
+      {/* Для самопознания мини */}
+      <Element name="selfDevelopment">
+        <div className={style.selfDiscoveryMini}>
+          <h3>Для самопознания</h3>
+          <div className={style.conteinerSelfDiscovery}>
+            <div className={style.sliderContainer}>
+              <SliderTestsMini />
+            </div>
+          </div>
+        </div>
+      </Element>
+
       {/* Интересные статьи */}
       <Element>
         <div className={style.selfDiscovery}>
@@ -668,6 +849,18 @@ const Main = () => {
           <div className={style.conteinerSelfDiscovery}>
             <div className={style.sliderContainer}>
               <SliderArticles />
+            </div>
+          </div>
+        </div>
+      </Element>
+
+      {/* Интересные статьи */}
+      <Element>
+        <div className={style.selfDiscoveryMini}>
+          <h3>Интересные статьи</h3>
+          <div className={style.conteinerSelfDiscovery}>
+            <div className={style.sliderContainer}>
+              <SliderArticlesMini />
             </div>
           </div>
         </div>

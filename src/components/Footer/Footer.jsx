@@ -15,7 +15,7 @@ const PhoneForm = () => {
       const response = await axios.post('/api/callback', { phone });
       setMessage(response.data);
     } catch (error) {
-      setMessage('Ошибка при отправке данных');
+      setMessage('Ошибка при отправке данных'); 
     }
   };
 
@@ -36,7 +36,6 @@ const PhoneForm = () => {
     </div>
   );
 };
-
 
 const Footer = () => {
   return (

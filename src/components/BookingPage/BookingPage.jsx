@@ -25,7 +25,7 @@ const Calendar = ({ selectedDate, onDateClick }) => {
 
     const isWeekend = (day) => {
         const date = new Date(year, month, day);
-        return date.getDay() === 0 || date.getDay() === 6;
+        return date.getDay() === 0 || date.getDay() === 6; 
     };
 
     const isPastDate = (day) => {

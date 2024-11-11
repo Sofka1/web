@@ -24,7 +24,7 @@ const Services = () => {
       }
     };
  
-    loadServices();
+    loadServices(); 
   }, []);
 
   // Проверка наличия данных перед фильтрацией

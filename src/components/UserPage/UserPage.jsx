@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import style from './UserPage.module.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 const UserPage = () => {
     const { id } = useParams(); // Получаем ID пользователя из URL
@@ -23,6 +23,7 @@ const UserPage = () => {
     });
     const navigate = useNavigate(); // Для перенаправления пользователя
     const [showModal, setShowModal] = useState(false); // состояние для отображения модального окна
+    const [savedArticles, setSavedArticles] = useState([]); // Состояние для статей
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -56,7 +57,6 @@ const UserPage = () => {
         fetchUserData();
     }, [id]);
 
-
     // Загрузка данных пользователя из localStorage
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -70,6 +70,64 @@ const UserPage = () => {
             });
         }
     }, []);
+
+    useEffect(() => {
+        const fetchSavedArticles = async () => {
+            try {
+                console.log(`Загрузка избранных статей для user_id: ${id}`);
+
+                const response = await fetch(`http://localhost:8080/api/favorites?user_id=${id}`);
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Ошибка от сервера:', errorData);
+                    throw new Error('Ошибка при загрузке избранных статей');
+                }
+
+                const data = await response.json();
+                console.log('Избранные статьи:', data);
+                setSavedArticles(data);
+            } catch (error) {
+                console.error('Ошибка при получении избранных статей:', error.message);
+            }
+        };
+
+        if (id) {
+            fetchSavedArticles();
+        }
+    }, [id]);
+
+    const toggleFavorite = async (articleId) => {
+        try {
+            const isFavorite = savedArticles.some((article) => article.id === articleId);
+
+            const response = await fetch(`http://localhost:8080/api/favorites`, {
+                method: isFavorite ? 'DELETE' : 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    article_id: articleId,
+                    user_id: id,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Ошибка при обновлении избранного');
+            }else{
+                console.log('oki');
+            }
+
+            if (isFavorite) {
+                setSavedArticles((prev) => prev.filter((article) => article.id !== articleId));
+            } else {
+                const addedArticle = await response.json();
+                setSavedArticles((prev) => [...prev, addedArticle]);
+            }
+        } catch (error) {
+            console.error('Ошибка при добавлении/удалении из избранного:', error);
+        }
+    };
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -243,7 +301,7 @@ const UserPage = () => {
         return timeString.slice(0, 5);
     };
 
-    const currentDate = new Date();
+    const currentDate = new Date(); 
 
     // Проверка наличия данных перед фильтрацией
     const upcomingServices = user.services ? user.services.filter(service => new Date(service.booking_date) >= currentDate) : [];
@@ -510,9 +568,22 @@ const UserPage = () => {
                     {activeTab === 'articles' && (
                         <div>
                             <h2>Сохраненные статьи</h2>
-                            <p>Здесь будут отображены ваши сохраненные статьи.</p>
+                            <ul className={style.articleList}>
+                                {savedArticles.map((article) => (
+                                    <li key={article.id} className={style.articleItem}>
+                                        <Link to={`/articles/${article.id}`}>{article.title}</Link>
+                                        <button
+                                            onClick={() => toggleFavorite(article.id)}
+                                            className={style.favoriteButton}
+                                        >
+                                            {savedArticles.some((savedArticle) => savedArticle.id === article.id) ? '❤️' : '🤍'}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     )}
+
                 </div>
             </div>
 
@@ -528,4 +599,4 @@ const UserPage = () => {
     );
 };
 
-export default UserPage;
+export default UserPage; 

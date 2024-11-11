@@ -24,14 +24,14 @@ const OneServices = () => {
             setLoading(false);
         }
     };
-
+ 
 
     useEffect(() => {
         fetchReviews(); // Загружаем отзывы при монтировании компонента
     }, [id]);
 
     // Загрузка данных услуги
-    useEffect(() => {
+    useEffect(() => { 
         const loadServiceData = async () => {
             try {
                 const services = await fetchServices(); // Загружаем данные услуг

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import style from './App.css';
 
@@ -12,14 +11,12 @@ import Login from './components/Login/Login';
 import BookingPage from './components/BookingPage/BookingPage';
 import UserPage from './components/UserPage/UserPage';
 import AdminPage from './components/AdminPage/AdminPage'; 
-
+import Articles from './components/Articles/Articles';
 const App = () => {
-
   return (
     <div className={style.app}>
       <BrowserRouter>
         <Header />
-
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path='/main' element={<Main />} />
@@ -30,12 +27,11 @@ const App = () => {
           <Route path="/booking/:id" element={<BookingPage />} />
           <Route path='/userPage/:id' element={<UserPage/>}/>
           <Route path='/adminPage/:id' element={<AdminPage/>}/>
+          <Route path='/articles/:id' element={<Articles/>}/>
         </Routes>
-
         <Footer />
       </BrowserRouter>
     </div>
   );
 }
-
 export default App;

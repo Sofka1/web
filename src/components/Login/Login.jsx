@@ -51,7 +51,7 @@ const Login = () => {
                     surname: data.user.surname, // Фамилия
                     email: data.user.email,     // Почта
                     phone: data.user.phone,      // Телефон
-                    role: data.user.role
+                    role: data.user.role 
                 }));
 
                 // Загружаем избранные статьи пользователя (если есть API для получения избранных)

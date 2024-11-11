@@ -216,7 +216,7 @@
 
     .footerContent {
         max-width: 768px;
-        justify-content: center;
+        justify-content: center; 
         gap: 80px;
     }
 
@@ -251,5 +251,76 @@
 
     .menuFooter li a {
         font-size: 12px;
+    }
+}
+
+
+@media(max-width:320px) {
+    .footer {
+        max-width: 320px;
+        padding: 20px 0;
+    }
+
+    .footerHeader {
+        margin-bottom: 30px;
+    }
+
+    .footerLogo {
+        width: 140px;
+        margin: 0 15px;
+    }
+
+    .footerContent {
+        max-width: 768px;
+        flex-direction: column;
+    }
+
+    .formFooter {
+        flex-direction: column;
+        justify-content: left;
+        margin-left: 20px;
+    }
+
+    .formFooterInfo {
+        max-width: 260px;
+    }
+    
+    .formFooterInfo h4 {
+        font-size: 14px;
+    }
+
+    .containerForm {
+        margin-left: 0;
+    }
+
+    /* менюшка сбоку */
+    .menuFooter {
+        margin-top: 0;
+        width: 290px;
+    }
+
+    .menuFooter li {
+        padding: 3px 10px 5px 10px;
+        margin: 0 10px 10px 0;
+    }
+
+    .menuFooter li a {
+        font-size: 10px;
+    }
+
+    .contentLinks {
+        padding: 25px 0 0px 0;
+        max-width: 320px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .footerDocs{
+        margin-left: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        text-align: left;
     }
 }

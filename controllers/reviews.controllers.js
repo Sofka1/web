@@ -83,4 +83,4 @@ class ReviewsController {
 
 }
 
-module.exports = new ReviewsController();
+module.exports = new ReviewsController(); 

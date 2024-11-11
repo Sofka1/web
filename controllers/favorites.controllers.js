@@ -50,7 +50,51 @@ const FavoritesControllers = {
             console.error('Ошибка при получении списка избранных:', error);
             res.status(500).json({ message: 'Ошибка сервера' });
         }
+    },
+
+    // Проверка, находится ли статья в избранном
+    async checkFavoriteStatus(req, res) {
+        const { user_id, article_id } = req.body;
+
+        try {
+            const query = `
+            SELECT * FROM "Favorites"
+            WHERE user_id = $1 AND article_id = $2;
+        `;
+            const result = await req.pool.query(query, [user_id, article_id]);
+
+            res.json({ isFavorite: result.rowCount > 0 });
+        } catch (error) {
+            console.error('Ошибка при проверке статуса избранного:', error);
+            res.status(500).json({ message: 'Ошибка сервера' });
+        }
+    },
+
+    async getUserFavorites(req, res) {
+        const userId = req.query.user_id;
+        console.log(`Получение избранных статей для user_id: ${userId}`);
+
+        if (!userId) {
+            return res.status(400).json({ message: 'user_id не передан' });
+        }
+
+        try {
+            const query = `
+                SELECT articles.*
+                FROM "Favorites"
+                JOIN "Articles" AS articles ON articles.id = "Favorites".article_id
+                WHERE "Favorites".user_id = $1
+            `;
+            const result = await req.pool.query(query, [userId]);
+
+            res.json(result.rows);
+        } catch (error) {
+            console.error('Ошибка при получении избранных статей:', error);
+            res.status(500).json({ message: 'Ошибка при получении избранных статей' });
+        }
     }
+
+
 }
 
 module.exports = FavoritesControllers;

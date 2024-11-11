@@ -3,7 +3,7 @@ const ArticlesController = {
     async addArticle(req, res) {
         const { title, content } = req.body;
         const created_at = new Date();
-   
+    
         try {
             const query = `
                 INSERT INTO "Articles" (title, content, created_at)

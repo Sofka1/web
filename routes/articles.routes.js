@@ -12,6 +12,6 @@ router.get('/articles/all', ArticlesControllers.getAllArticles);
 router.get('/articles/:id', ArticlesControllers.getArticleById);
 
 // Маршрут для удаления статьи по ID
-router.delete('/articles/:id', ArticlesControllers.deleteArticle);
+router.delete('/articles/:id', ArticlesControllers.deleteArticle); 
 
 module.exports = router;   

@@ -1,0 +1,38 @@
+.container{
+    max-width: 1200px;
+    min-height: 430px;
+    margin: auto;
+    padding: 20px;
+}
+
+.container h1{
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 140%;
+    color: #545778;
+
+    margin-bottom: 10px;
+}
+
+.container p{
+    font-weight: 500;
+    font-size: 15px;
+    color: #FA8270;
+    margin-bottom: 10px;
+}
+
+.container span{
+    font-weight: 500;
+    font-size: 20px;
+    color: #545778;
+}
+
+.headerArticle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerArticle span{
+    cursor: pointer;
+}
